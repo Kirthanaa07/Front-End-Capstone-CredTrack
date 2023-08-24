@@ -1,22 +1,24 @@
-// import { Button } from 'react-bootstrap'; // TODO: COMMENT IN FOR AUTH
-// import { signOut } from '../utils/auth'; // TODO: COMMENT IN FOR AUTH
-// import { useAuth } from '../utils/context/authContext'; // TODO: COMMENT IN FOR AUTH
+import React, { useEffect, useState } from 'react';
+import { Button } from 'react-bootstrap'; // TODO: COMMENT IN FOR AUTH
+import { useAuth } from '../utils/context/authContext'; // TODO: COMMENT IN FOR AUTH
+import getSinglePhysician from '../api/physicianData';
 
 function Home() {
-  // const { user } = useAuth(); // TODO: COMMENT IN FOR AUTH
+  const [physician, setPhysician] = useState([]);
 
-  const user = { displayName: 'Dr. T' }; // TODO: COMMENT OUT FOR AUTH
+  const { user } = useAuth();
+
+  const getPhysician = () => {
+    getSinglePhysician(user.uid).then(setPhysician);
+  };
+  useEffect(() => {
+    getPhysician();
+  }, []);
   return (
-    <div
-      className="text-center d-flex flex-column justify-content-center align-content-center"
-      style={{
-        height: '90vh',
-        padding: '30px',
-        maxWidth: '400px',
-        margin: '0 auto',
-      }}
-    >
-      <h1>Hello {user.displayName}! </h1>
+    <div>
+      <Button type="button" size="lg" className="copy-btn" onClick={addCred}>
+        Add Cred
+      </Button>
     </div>
   );
 }
