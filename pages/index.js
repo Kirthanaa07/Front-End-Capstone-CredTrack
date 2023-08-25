@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { Button } from 'react-bootstrap'; // TODO: COMMENT IN FOR AUTH
 import { useAuth } from '../utils/context/authContext'; // TODO: COMMENT IN FOR AUTH
 import getSinglePhysician from '../api/physicianData';
+import PhysicianCard from '../components/physicianCard';
 
-function Home() {
+export default function Home() {
   const [physician, setPhysician] = useState([]);
 
   const { user } = useAuth();
@@ -15,12 +17,16 @@ function Home() {
     getPhysician();
   }, []);
   return (
-    <div>
-      <Button type="button" size="lg" className="copy-btn" onClick={addCred}>
-        Add Cred
-      </Button>
+    <div className="text-center my-4">
+      <Link href="/physician/new" passHref>
+        <Button>Add A Physician</Button>
+      </Link>
+      <div className="d-flex flex-wrap">
+        {/* TODO: map over books here using BookCard component */}
+        {physician.map((items) => (
+          <PhysicianCard key={items.firebaseKey} teamObj={items} onUpdate={getPhysician} />
+        ))}
+      </div>
     </div>
   );
 }
-
-export default Home;
