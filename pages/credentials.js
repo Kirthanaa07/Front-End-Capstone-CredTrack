@@ -6,7 +6,7 @@ import { getSingleCredential } from '../api/credentialData';
 import CredentialCard from '../components/credentialCard';
 
 export default function Home() {
-  const [credential, setCredential] = useState([]);
+  const [credential, setCredential] = useState({});
 
   const { user } = useAuth();
 
@@ -15,7 +15,7 @@ export default function Home() {
   };
   useEffect(() => {
     getCredential();
-  }, []);
+  });
   return (
     <div className="text-center my-4">
       <Link href="/credential/new" passHref>
@@ -23,7 +23,7 @@ export default function Home() {
       </Link>
       <div className="d-flex flex-wrap">
         {credential.map((items) => (
-          <CredentialCard key={items.firebaseKey} physicianObj={items} onUpdate={getCredential} />
+          <CredentialCard key={items.firebaseKey} credentialObj={items} onUpdate={getCredential} />
         ))}
       </div>
     </div>

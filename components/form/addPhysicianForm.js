@@ -9,9 +9,8 @@ import { updatePhysician, createPhysician } from '../../api/physicianData';
 
 const initialState = {
   firebaseKey: '',
-  first_name: '',
+  firstName: '',
   npiNumber: '',
-  last: '',
   image: '',
 };
 
@@ -57,7 +56,7 @@ function PhysicianForm({ obj }) {
           type="text"
           placeholder="Enter your first name"
           name="first_name"
-          value={formInput.first_name}
+          value={formInput.firstName}
           onChange={handleChange}
           required
         />
@@ -94,12 +93,12 @@ function PhysicianForm({ obj }) {
 PhysicianForm.propTypes = {
   obj: PropTypes.shape({
     firebaseKey: PropTypes.string,
-    first_name: PropTypes.string,
-    last_name: PropTypes.string,
+    firstName: PropTypes.string,
+    lastName: PropTypes.string,
     npiNumber: PropTypes.string,
     image: PropTypes.string,
     state: PropTypes.string,
-    telephone_number: PropTypes.string,
+    telephoneNumber: PropTypes.string,
     email: PropTypes.string,
   }),
 };
