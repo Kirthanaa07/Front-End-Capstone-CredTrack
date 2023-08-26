@@ -5,23 +5,22 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import { Button } from 'react-bootstrap';
 import { useAuth } from '../../utils/context/authContext';
-import { getSinglePhysician, updatePhysician, createPhysician } from '../../api/physicianData';
+import { updatePhysician, createPhysician } from '../../api/physicianData';
 
 const initialState = {
   firebaseKey: '',
   first_name: '',
+  npiNumber: '',
   last: '',
   image: '',
 };
 
 function PhysicianForm({ obj }) {
   const [formInput, setFormInput] = useState(initialState);
-  const [physician, setPhysician] = useState([]);
   const router = useRouter();
   const { user } = useAuth();
 
   useEffect(() => {
-    getSinglePhysician(user.uid).then(setPhysician);
     if (obj.firebaseKey) setFormInput(obj);
   }, [obj, user]);
 
@@ -76,26 +75,14 @@ function PhysicianForm({ obj }) {
         />
       </FloatingLabel>
       <FloatingLabel controlId="floatingSelect" label="NPI Number">
-        <Form.Select
-          aria-label="NPI Number"
+        <Form.Control
+          type="string"
+          placeholder="Enter NPI number"
           name="npiNumber"
+          value={formInput.npiNumber}
           onChange={handleChange}
-          className="mb-3"
-          value={obj.npiNumber} // FIXME: modify code to remove error
           required
-        >
-          <option value="">Select Your Specification</option>
-          {
-            physician.map((item) => (
-              <option
-                key={item.firebaseKey}
-                value={item.firebaseKey}
-              >
-                {item.physician}
-              </option>
-            ))
-          }
-        </Form.Select>
+        />
       </FloatingLabel>
 
       {/* SUBMIT BUTTON  */}
@@ -109,8 +96,9 @@ PhysicianForm.propTypes = {
     firebaseKey: PropTypes.string,
     first_name: PropTypes.string,
     last_name: PropTypes.string,
-    npiNumber: PropTypes.number,
+    npiNumber: PropTypes.string,
     image: PropTypes.string,
+    state: PropTypes.string,
     telephone_number: PropTypes.string,
     email: PropTypes.string,
   }),

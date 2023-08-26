@@ -22,6 +22,7 @@ function PhysicianCard({ physicianObj, onUpdate }) {
       <Card.Body>
         <Card.Title>{physicianObj.first_name}</Card.Title>
         <p>{physicianObj.last_name}</p>
+        <h4>{physicianObj.npiNumber}NPI No: </h4>
         <Link href={`/team/edit/${physicianObj.firebaseKey}`} passHref>
           <Button variant="primary" className="m-2">EDIT</Button>
         </Link>
@@ -37,6 +38,7 @@ PhysicianCard.propTypes = {
     image: PropTypes.string,
     first_name: PropTypes.string,
     last_name: PropTypes.string,
+    npiNumber: PropTypes.string,
   }).isRequired,
   onUpdate: PropTypes.func.isRequired,
 };

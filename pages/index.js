@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Button } from 'react-bootstrap'; // TODO: COMMENT IN FOR AUTH
 import { useAuth } from '../utils/context/authContext'; // TODO: COMMENT IN FOR AUTH
-import getSinglePhysician from '../api/physicianData';
+import { getSinglePhysician } from '../api/physicianData';
 import PhysicianCard from '../components/physicianCard';
 
 export default function Home() {
@@ -24,7 +24,7 @@ export default function Home() {
       <div className="d-flex flex-wrap">
         {/* TODO: map over books here using BookCard component */}
         {physician.map((items) => (
-          <PhysicianCard key={items.firebaseKey} teamObj={items} onUpdate={getPhysician} />
+          <PhysicianCard key={items.firebaseKey} physicianObj={items} onUpdate={getPhysician} />
         ))}
       </div>
     </div>
