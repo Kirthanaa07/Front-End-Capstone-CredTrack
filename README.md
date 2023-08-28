@@ -26,4 +26,4 @@ Any user can understand the function of the website and access them with their G
 https://github.com/Kirthanaa07/Front-End-Capstone-CredTrack
 
 ## Link to Loom video walkthrough of the app
-<>
+<https://www.loom.com/share/a74314095b7f465dadda9061202b6c90?sid=ee0461f5-3e5f-46df-b250-f1dc1e021459>
