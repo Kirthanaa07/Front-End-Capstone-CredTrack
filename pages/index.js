@@ -1,26 +1,33 @@
 import React, { useEffect, useState } from 'react';
-import { Button } from 'react-bootstrap'; // TODO: COMMENT IN FOR AUTH
-import { useAuth } from '../utils/context/authContext'; // TODO: COMMENT IN FOR AUTH
-import getSinglePhysician from '../api/physicianData';
+import { useAuth } from '../utils/context/authContext';
+import { getSinglePhysician } from '../api/physicianData';
+import PhysicianProfile from '../components/physicianProfile';
 
-function Home() {
-  const [physician, setPhysician] = useState([]);
+export default function Home() {
+  const [isLoading, setLoading] = useState(true);
+  const [physician, setPhysician] = useState();
 
   const { user } = useAuth();
 
   const getPhysician = () => {
-    getSinglePhysician(user.uid).then(setPhysician);
+    getSinglePhysician(user.uid)
+      .then((data) => {
+        setPhysician(data);
+        setLoading(false);
+      });
   };
   useEffect(() => {
     getPhysician();
   }, []);
-  return (
-    <div>
-      <Button type="button" size="lg" className="copy-btn" onClick={addCred}>
-        Add Cred
-      </Button>
-    </div>
-  );
-}
 
-export default Home;
+  if (!isLoading) {
+    return (
+      <div className="my-4">
+        <div className="d-flex flex-wrap">
+          <PhysicianProfile key={physician.physicianId} physicianObj={physician} onUpdate={getPhysician} />
+        </div>
+      </div>
+    );
+  }
+  return <></>;
+}
