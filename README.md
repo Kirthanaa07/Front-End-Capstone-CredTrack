@@ -7,7 +7,7 @@ CRED TRACK is a website which allows the Physicians User to add their credential
 <https://www.figma.com/file/YynUvoBXxmt73birURCXlg/Front-End-Capstone-wireframe?type=design&node-id=0-1&mode=design&t=wKtA3OYKGmymbatE-0>
 
 ## Link to the deployed project
-<https://kirthuvocabulary.netlify.app/>
+<https://kirthana-frontendcapstone-credtrack.netlify.app>
 
 ## Link to the project board
 https://github.com/Kirthanaa07/Front-End-Capstone-CredTrack
@@ -20,7 +20,7 @@ Any user can understand the function of the website and access them with their G
 * User can create their own credentials too.
 
 ## ScreenShot of the project
-![Screenshot](VocabprojectScreenshot.png)
+![Screenshot](projectScreenshot)
 
 ## List of contributors and links to their GitHub profiles
 https://github.com/Kirthanaa07/Front-End-Capstone-CredTrack
