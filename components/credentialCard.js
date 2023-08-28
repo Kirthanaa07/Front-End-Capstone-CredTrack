@@ -7,15 +7,22 @@ import { deleteCredential } from '../api/credentialData';
 
 function CredentialCard({ credentialObj, onUpdate }) {
   const deleteThisCredential = () => {
-    if (window.confirm(`Delete ${credentialObj.credType}?`)) {
-      deleteCredential(credentialObj.firebaseKey).then(() => onUpdate());
+    if (window.confirm(`Delete ${credentialObj.credentialType}?`)) {
+      deleteCredential(credentialObj.credentialId).then(() => onUpdate());
     }
   };
   return (
     <Card style={{ width: '18rem', margin: '10px' }}>
+      <Card.Img
+        variant="top"
+        src={credentialObj.imageUrl}
+        alt={credentialObj.credentialType}
+        style={{ height: '400px' }}
+      />
       <Card.Body>
-        <Card.Title>{credentialObj.credType}</Card.Title>
-        <Link href={`/credential/edit/${credentialObj.firebaseKey}`} passHref>
+        <Card.Title>{credentialObj.credentialType}</Card.Title>
+        <h4>Valid till: {credentialObj.expirationDate}</h4>
+        <Link href={`/credentials/edit/${credentialObj.credentialId}`} passHref>
           <Button variant="primary" className="m-2">EDIT</Button>
         </Link>
         <Button variant="danger" onClick={deleteThisCredential} className="m-2">DELETE</Button>
@@ -26,9 +33,10 @@ function CredentialCard({ credentialObj, onUpdate }) {
 
 CredentialCard.propTypes = {
   credentialObj: PropTypes.shape({
-    firebaseKey: PropTypes.string,
+    credentialId: PropTypes.string,
     imageUrl: PropTypes.string,
-    credType: PropTypes.string,
+    credentialType: PropTypes.string,
+    expirationDate: PropTypes.string,
   }).isRequired,
   onUpdate: PropTypes.func.isRequired,
 };

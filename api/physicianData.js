@@ -12,9 +12,9 @@ const getSinglePhysician = (uid) => new Promise((resolve, reject) => {
     .then((response) => response.json())
     .then((data) => {
       if (data) {
-        resolve(Object.values(data));
+        resolve(Object.values(data)[0]);
       } else {
-        resolve([]);
+        resolve({});
       }
     })
     .catch(reject);
@@ -36,7 +36,7 @@ const createPhysician = (payload) => new Promise((resolve, reject) => {
 
 // TODO: UPDATE PHYSICIAN
 const updatePhysician = (payload) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/physician/${payload.firebaseKey}.json`, {
+  fetch(`${endpoint}/physician/${payload.physicianId}.json`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
@@ -49,8 +49,8 @@ const updatePhysician = (payload) => new Promise((resolve, reject) => {
 });
 
 // TODO: DELETE PHYSICIAN
-const deletePhysician = (firebaseKey) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/physician/${firebaseKey}.json`, {
+const deletePhysician = (physicianId) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/physician/${physicianId}.json`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
@@ -62,15 +62,21 @@ const deletePhysician = (firebaseKey) => new Promise((resolve, reject) => {
 });
 
 // TODO: GET ALL PHYSICIAN
-const getAllPhysicians = (firebaseKey) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/physician/${firebaseKey}.json`, {
+const getAllPhysicians = () => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/physician.json`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
     },
   })
     .then((response) => response.json())
-    .then((data) => resolve(data))
+    .then((data) => {
+      if (data) {
+        resolve(Object.values(data));
+      } else {
+        resolve([]);
+      }
+    })
     .catch(reject);
 });
 

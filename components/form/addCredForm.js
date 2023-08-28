@@ -5,25 +5,26 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import { Button } from 'react-bootstrap';
 import { useAuth } from '../../utils/context/authContext';
-import { createCredential, getSingleCredential, updateCredential } from '../../api/credentialData';
+import { createCredential, updateCredential } from '../../api/credentialData';
+import { getAllCredentialTypes } from '../../api/credentialTypeData';
 
 const initialState = {
-  credType: '',
+  credentialType: '',
   imageUrl: '',
   expirationDate: '',
 };
 
-function CredentialForm({ obj }) {
+function CredentialForm({ credentialObj }) {
   const [formInput, setFormInput] = useState(initialState);
-  const [credentials, setCredential] = useState([]);
+  const [credentialTypes, setCredentialTypes] = useState([]);
   const router = useRouter();
   const { user } = useAuth();
 
   useEffect(() => {
-    getSingleCredential(user.uid).then(setCredential);
+    getAllCredentialTypes().then(setCredentialTypes);
 
-    if (obj.firebaseKey) setFormInput(obj);
-  }, [obj, user]);
+    if (credentialObj.credentialId) setFormInput(credentialObj);
+  }, [credentialObj, user]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -35,14 +36,14 @@ function CredentialForm({ obj }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (obj.firebaseKey) {
-      updateCredential(formInput).then(() => router.push(`/credential/${obj.firebaseKey}`));
+    if (credentialObj.credentialId) {
+      updateCredential(formInput).then(() => router.push(`/credentials/${credentialObj.uid}`));
     } else {
       const payload = { ...formInput, uid: user.uid };
       createCredential(payload).then(({ name }) => {
-        const patchPayload = { firebaseKey: name };
+        const patchPayload = { credentialId: name };
         updateCredential(patchPayload).then(() => {
-          router.push('/');
+          router.push(`/credentials/${user.uid}`);
         });
       });
     }
@@ -50,25 +51,25 @@ function CredentialForm({ obj }) {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <h2 className="text-white mt-5">{obj.firebaseKey ? 'Update' : 'Add'} Cred</h2>
+      <h2 className="text-white mt-5">{credentialObj.credentialId ? 'Update' : 'Add'} Cred</h2>
       {/* CRED SELECT  */}
       <FloatingLabel controlId="floatingSelect" label="Credential Type">
         <Form.Select
           aria-label="Credential Type"
-          name="uid"
+          name="credentialType"
           onChange={handleChange}
           className="mb-3"
-          value={obj.uid}
+          value={formInput.credentialType}
           required
         >
           <option value="">Select From Below</option>
           {
-            credentials.map((cred) => (
+            credentialTypes.map((credentialType) => (
               <option
-                key={cred.firebaseKey}
-                value={cred.firebaseKey}
+                key={credentialType.credentialTypeId}
+                value={credentialType.name}
               >
-                {cred.credType}
+                {credentialType.name}
               </option>
             ))
           }
@@ -90,7 +91,7 @@ function CredentialForm({ obj }) {
       {/* EXPIRATION DATE */}
       <FloatingLabel controlId="floatingInput3" label="Expiration Date" className="mb-3">
         <Form.Control
-          type="text"
+          type="date"
           placeholder="Enter Expiration date"
           name="expirationDate"
           value={formInput.expirationDate}
@@ -100,23 +101,23 @@ function CredentialForm({ obj }) {
       </FloatingLabel>
 
       {/* SUBMIT BUTTON  */}
-      <Button type="submit">{obj.firebaseKey ? 'Update' : 'Add'} Credential</Button>
+      <Button type="submit">{credentialObj.credentialId ? 'Update' : 'Add'} Credential</Button>
     </Form>
   );
 }
 
 CredentialForm.propTypes = {
-  obj: PropTypes.shape({
+  credentialObj: PropTypes.shape({
+    credentialId: PropTypes.string,
     uid: PropTypes.string,
-    firebaseKey: PropTypes.string,
-    credType: PropTypes.string,
+    credentialType: PropTypes.string,
     imageUrl: PropTypes.string,
     expirationDate: PropTypes.string,
   }),
 };
 
 CredentialForm.defaultProps = {
-  obj: initialState,
+  credentialObj: initialState,
 };
 
 export default CredentialForm;

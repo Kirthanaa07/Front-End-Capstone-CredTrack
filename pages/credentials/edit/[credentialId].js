@@ -4,13 +4,21 @@ import { getSingleCredential } from '../../../api/credentialData';
 import CredentialForm from '../../../components/form/addCredForm';
 
 function EditCredential() {
+  const [isLoading, setIsLoading] = useState(true);
   const [editItem, setEditItem] = useState({});
   const router = useRouter();
-  const { firebaseKey } = router.query;
+  const { credentialId } = router.query;
   useEffect(() => {
-    getSingleCredential(firebaseKey).then(setEditItem);
-  }, [firebaseKey]);
-  return (<CredentialForm obj={editItem} />);
+    getSingleCredential(credentialId).then((data) => {
+      setEditItem(data);
+      setIsLoading(false);
+    });
+  }, [credentialId]);
+
+  if (!isLoading) {
+    return (<CredentialForm credentialObj={editItem} />);
+  }
+  return <></>;
 }
 
 export default EditCredential;

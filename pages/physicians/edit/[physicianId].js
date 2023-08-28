@@ -6,10 +6,10 @@ import PhysicianForm from '../../../components/form/addPhysicianForm';
 function EditPhysician() {
   const [editItem, setEditItem] = useState({});
   const router = useRouter();
-  const { firebaseKey } = router.query;
+  const { physicianId } = router.query;
   useEffect(() => {
-    getSinglePhysician(firebaseKey).then(setEditItem);
-  }, [firebaseKey]);
+    getSinglePhysician(physicianId).then(setEditItem);
+  }, [physicianId]);
   return (<PhysicianForm obj={editItem} />);
 }
 

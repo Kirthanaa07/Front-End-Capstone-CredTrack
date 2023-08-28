@@ -15,9 +15,9 @@ export default function NavBarAuth() {
         </Link>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="me-auto">
+          <Nav className="me-auto d-flex flex-grow-1 justify-content-between">
             {/* CLOSE NAVBAR ON LINK SELECTION: https://stackoverflow.com/questions/72813635/collapse-on-select-react-bootstrap-navbar-with-nextjs-not-working */}
-            <Link passHref href="/credential/new">
+            <Link passHref href="/credentials/new">
               <Nav.Link>Add Credential</Nav.Link>
             </Link>
             <Button variant="danger" onClick={signOut}>Sign Out</Button>

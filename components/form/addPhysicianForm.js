@@ -8,20 +8,20 @@ import { useAuth } from '../../utils/context/authContext';
 import { updatePhysician, createPhysician } from '../../api/physicianData';
 
 const initialState = {
-  firebaseKey: '',
+  physicianId: '',
   firstName: '',
   npiNumber: '',
   image: '',
 };
 
-function PhysicianForm({ obj }) {
+function PhysicianForm({ physicianObj }) {
   const [formInput, setFormInput] = useState(initialState);
   const router = useRouter();
   const { user } = useAuth();
 
   useEffect(() => {
-    if (obj.firebaseKey) setFormInput(obj);
-  }, [obj, user]);
+    if (physicianObj.physicianId) setFormInput(physicianObj);
+  }, [physicianObj, user]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -33,12 +33,12 @@ function PhysicianForm({ obj }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (obj.firebaseKey) {
+    if (physicianObj.physicianId) {
       updatePhysician(formInput).then(() => router.push('/'));
     } else {
       const payload = { ...formInput, uid: user.uid };
       createPhysician(payload).then(({ name }) => {
-        const patchPayload = { firebaseKey: name };
+        const patchPayload = { physicianId: name };
         updatePhysician(patchPayload).then(() => {
           router.push('/');
         });
@@ -49,7 +49,7 @@ function PhysicianForm({ obj }) {
   return (
 
     <Form onSubmit={handleSubmit}>
-      <h2 className="text-white mt-5">{obj.firebaseKey ? 'Update' : 'Create'} Physician</h2>
+      <h2 className="text-white mt-5">{physicianObj.physicianId ? 'Update' : 'Create'} Physician</h2>
       {/* TITLE INPUT  */}
       <FloatingLabel controlId="floatingInput1" label="Physician's Name" className="mb-3">
         <Form.Control
@@ -85,14 +85,14 @@ function PhysicianForm({ obj }) {
       </FloatingLabel>
 
       {/* SUBMIT BUTTON  */}
-      <Button type="submit">{obj.firebaseKey ? 'Update' : 'Create'} Profile</Button>
+      <Button type="submit">{physicianObj.physicianId ? 'Update' : 'Create'} Profile</Button>
     </Form>
   );
 }
 
 PhysicianForm.propTypes = {
-  obj: PropTypes.shape({
-    firebaseKey: PropTypes.string,
+  physicianObj: PropTypes.shape({
+    physicianId: PropTypes.string,
     firstName: PropTypes.string,
     lastName: PropTypes.string,
     npiNumber: PropTypes.string,
@@ -104,7 +104,7 @@ PhysicianForm.propTypes = {
 };
 
 PhysicianForm.defaultProps = {
-  obj: initialState,
+  physicianObj: initialState,
 };
 
 export default PhysicianForm;
