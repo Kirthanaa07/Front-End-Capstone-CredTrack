@@ -1,33 +1,62 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../utils/context/authContext';
-import { getSinglePhysician } from '../api/physicianData';
+import { getAllPhysiciansDb, getSinglePhysicianDb } from '../api/physicianData';
 import PhysicianProfile from '../components/physicianProfile';
+import PhysiciansTable from '../components/physiciansTable';
 
 export default function Home() {
+  // https://stackoverflow.com/questions/62920277/why-the-initial-loading-state-is-set-to-true-while-using-usestate
   const [isLoading, setLoading] = useState(true);
   const [physician, setPhysician] = useState();
+  const [physicians, setPhysicians] = useState();
 
   const { user } = useAuth();
 
-  const getPhysician = () => {
-    getSinglePhysician(user.uid)
+  const getAllPhysicians = () => {
+    getAllPhysiciansDb()
+      .then((result) => {
+        setPhysicians(result);
+        setLoading(false);
+      });
+  };
+
+  const getSinglePhysician = () => {
+    getSinglePhysicianDb(user.uid)
       .then((data) => {
         setPhysician(data);
         setLoading(false);
       });
   };
+
   useEffect(() => {
-    getPhysician();
+    if (user.isAdmin) {
+      getAllPhysicians();
+    } else {
+      getSinglePhysician();
+    }
   }, []);
 
-  if (!isLoading) {
-    return (
+  let returnHtml;
+  if (!isLoading && !user.isAdmin) {
+    returnHtml = (
       <div className="my-4">
         <div className="d-flex flex-wrap">
-          <PhysicianProfile key={physician.physicianId} physicianObj={physician} onUpdate={getPhysician} />
+          <PhysicianProfile key={physician.physicianId} physicianObj={physician} onUpdate={getSinglePhysician} />
         </div>
       </div>
     );
+  } else if (!isLoading && user.isAdmin) {
+    returnHtml = (
+      <div className="my-4">
+        <div className="d-flex flex-wrap">
+          <PhysiciansTable physicians={physicians} onDelete={getAllPhysicians} />
+        </div>
+      </div>
+    );
+  } else {
+    return <></>;
   }
-  return <></>;
+
+  console.warn(returnHtml);
+  return returnHtml;
 }

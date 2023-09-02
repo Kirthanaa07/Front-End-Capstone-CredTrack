@@ -25,3 +25,16 @@ body {
   background-color: white;
   border-radius: 10px;
 }
+
+#three-dot-nav-dropdown.dropdown-toggle.nav-link::after {
+  display: none !important;
+}
+
+.icon-button {
+  padding: 10px;
+}
+
+.icon-button:hover {
+  background-color: lightgray;
+  border-radius: 15px;
+}

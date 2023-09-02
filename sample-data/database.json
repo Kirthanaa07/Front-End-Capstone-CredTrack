@@ -1,5 +1,5 @@
 {
-  "credentialType":{
+  "credentialType": {
     "-NcomCz5co5W9zNbitfA": {
       "credentialTypeId": "-NcomCz5co5W9zNbitfA",
       "name": "Curriculum Vitae",
@@ -23,16 +23,15 @@
       "credentialId": "-NcmRRcSUpFC4cjbHYCz",
       "uid": "7GaVXCXf9rQKP5FT69TkzRgSi2q2",
       "credentialType": "Medical License",
-      "imageUrl": "",
+      "imageUrl": "https://www.classcentral.com/report/wp-content/uploads/2022/06/stanford-medicine-certificate-intro-to-food-final.png",
       "expirationDate": ""
     }
   },
   "physician": {
     "-NcdPH7Jr9qVrRCJ7d6P": {
       "physicianId": "-NcdPH7Jr9qVrRCJ7d6P",
-      "uid":"7GaVXCXf9rQKP5FT69TkzRgSi2q2",
-      "firstName": "Kirthana",
-      "lastName": "Sukumaran",
+      "uid": "7GaVXCXf9rQKP5FT69TkzRgSi2q2",
+      "displayName": "Kirthana Sukumaran",
       "description": "I am a physician and I am good at what i do.",
       "email": "kirthanaa07@gmail.com",
       "image": "https://t4.ftcdn.net/jpg/05/48/04/19/240_F_548041959_McdGogq1h32eASUid6kSPnIDVFLJgCnm.jpg",
@@ -47,12 +46,11 @@
     },
     "-NcdPK38vBxmMkwHsEwg": {
       "physicianId": "-NcdPK38vBxmMkwHsEwg",
-      "uid":"hSFWJXn3KOfDYE9XFVcJPuVqkk13",
-      "firstName": "MARCUS",
-      "lastName": "ALRIDGE",
+      "uid": "hSFWJXn3KOfDYE9XFVcJPuVqkk13",
+      "displayName": "MARCUS ALRIDGE",
       "description": "I am an imposter and I am good at what i do.",
       "email": "marcus09@gmail.com",
-      "image": "",
+      "image": "https://t3.ftcdn.net/jpg/05/95/16/84/240_F_595168457_G87K04TOzHdSPiTmpM6wiue5ZzW83Qb4.jpg",
       "npiNumber": "1891260691",
       "address1": "7640 HIGHWAY 70 S",
       "address2": "SUITE 204",
@@ -61,6 +59,14 @@
       "postalCode": "372211758",
       "telephoneNumber": "615-662-2800",
       "faxNumber": "615-662-0411"
+    }
+  },
+  "user":{
+    "-NczFsr04eCRXXfTRG1H":{
+      "userId": "-NczFsr04eCRXXfTRG1H",
+      "uid": "V3xwKE3IMhfMP0TUJQMDvNzy3E93",
+      "displayName": "Kirthana Sukumaran Admin",
+      "isAdmin": true
     }
   }
 }

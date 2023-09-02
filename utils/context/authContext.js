@@ -8,6 +8,7 @@ import React, {
   useState,
 } from 'react';
 import { firebase } from '../client';
+import { createUserDb, getSingleUserDb, updateUserDb } from '../../api/userData';
 
 const AuthContext = createContext();
 
@@ -24,7 +25,21 @@ const AuthProvider = (props) => {
   useEffect(() => {
     firebase.auth().onAuthStateChanged((fbUser) => {
       if (fbUser) {
-        setUser(fbUser);
+        getSingleUserDb(fbUser.uid).then((data) => {
+          if (data) {
+            setUser({ ...fbUser, isAdmin: data.isAdmin });
+          } else {
+            createUserDb({
+              uid: fbUser.uid,
+              displayName: fbUser.displayName,
+              isAdmin: false,
+            }).then(({ name }) => {
+              const patchPayload = { userId: name };
+              updateUserDb(patchPayload);
+              setUser({ ...fbUser, isAdmin: false });
+            });
+          }
+        });
       } else {
         setUser(false);
       }

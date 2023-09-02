@@ -2,7 +2,7 @@ import { clientCredentials } from '../utils/client';
 
 const endpoint = clientCredentials.databaseURL;
 
-const getSingleCredential = (credentialId) => new Promise((resolve, reject) => {
+const getSingleCredentialDb = (credentialId) => new Promise((resolve, reject) => {
   fetch(`${endpoint}/credential/${credentialId}.json`, {
     method: 'GET',
     headers: {
@@ -15,7 +15,7 @@ const getSingleCredential = (credentialId) => new Promise((resolve, reject) => {
 });
 
 // TODO: CREATE Credential
-const createCredential = (payload) => new Promise((resolve, reject) => {
+const createCredentialDb = (payload) => new Promise((resolve, reject) => {
   fetch(`${endpoint}/credential.json`, {
     method: 'POST',
     headers: {
@@ -29,7 +29,7 @@ const createCredential = (payload) => new Promise((resolve, reject) => {
 });
 
 // TODO: UPDATE Credential
-const updateCredential = (payload) => new Promise((resolve, reject) => {
+const updateCredentialDb = (payload) => new Promise((resolve, reject) => {
   fetch(`${endpoint}/credential/${payload.credentialId}.json`, {
     method: 'PATCH',
     headers: {
@@ -43,7 +43,7 @@ const updateCredential = (payload) => new Promise((resolve, reject) => {
 });
 
 // TODO: DELETE Credential
-const deleteCredential = (credentialId) => new Promise((resolve, reject) => {
+const deleteCredentialDb = (credentialId) => new Promise((resolve, reject) => {
   fetch(`${endpoint}/credential/${credentialId}.json`, {
     method: 'DELETE',
     headers: {
@@ -56,7 +56,7 @@ const deleteCredential = (credentialId) => new Promise((resolve, reject) => {
 });
 
 // TODO: GET ALL Credential
-const getAllCredentialsForPhysician = (uid) => new Promise((resolve, reject) => {
+const getAllCredentialsForPhysicianDb = (uid) => new Promise((resolve, reject) => {
   fetch(`${endpoint}/credential.json?orderBy="uid"&equalTo="${uid}"`, {
     method: 'GET',
     headers: {
@@ -75,9 +75,9 @@ const getAllCredentialsForPhysician = (uid) => new Promise((resolve, reject) => 
 });
 
 export {
-  getSingleCredential,
-  createCredential,
-  updateCredential,
-  deleteCredential,
-  getAllCredentialsForPhysician,
+  getSingleCredentialDb,
+  createCredentialDb,
+  updateCredentialDb,
+  deleteCredentialDb,
+  getAllCredentialsForPhysicianDb,
 };

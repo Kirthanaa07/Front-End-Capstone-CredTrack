@@ -11,11 +11,11 @@ export default function NavBarAuth() {
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
       <Container>
         <Image src="/LOGO.png" alt="LOGO" />
-        <Link passHref href="/">
-          <Navbar.Brand>Profile</Navbar.Brand>
-        </Link>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
+          <Link passHref href="/">
+            <Navbar.Brand>Profile</Navbar.Brand>
+          </Link>
           <Nav className="me-auto d-flex flex-grow-1 justify-content-between">
             <Link passHref href="/credentials/new">
               <Nav.Link>Add Credential</Nav.Link>

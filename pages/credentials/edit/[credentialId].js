@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { getSingleCredential } from '../../../api/credentialData';
+import { getSingleCredentialDb } from '../../../api/credentialData';
 import CredentialForm from '../../../components/form/addCredForm';
 
 function EditCredential() {
@@ -9,7 +9,7 @@ function EditCredential() {
   const router = useRouter();
   const { credentialId } = router.query;
   useEffect(() => {
-    getSingleCredential(credentialId).then((data) => {
+    getSingleCredentialDb(credentialId).then((data) => {
       setEditItem(data);
       setIsLoading(false);
     });
