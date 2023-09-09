@@ -9,6 +9,7 @@ import React, {
 } from 'react';
 import { firebase } from '../client';
 import { createUserDb, getSingleUserDb, updateUserDb } from '../../api/userData';
+import { getSinglePhysicianDb } from '../../api/physicianData';
 
 const AuthContext = createContext();
 
@@ -27,7 +28,13 @@ const AuthProvider = (props) => {
       if (fbUser) {
         getSingleUserDb(fbUser.uid).then((data) => {
           if (data) {
-            setUser({ ...fbUser, isAdmin: data.isAdmin });
+            getSinglePhysicianDb(fbUser.uid).then((physician) => {
+              if (physician) {
+                setUser({ ...fbUser, isAdmin: data.isAdmin, isPhysician: true });
+              } else {
+                setUser({ ...fbUser, isAdmin: data.isAdmin, isPhysician: false });
+              }
+            });
           } else {
             createUserDb({
               uid: fbUser.uid,
@@ -36,7 +43,13 @@ const AuthProvider = (props) => {
             }).then(({ name }) => {
               const patchPayload = { userId: name };
               updateUserDb(patchPayload);
-              setUser({ ...fbUser, isAdmin: false });
+              getSinglePhysicianDb(fbUser.uid).then((physician) => {
+                if (physician) {
+                  setUser({ ...fbUser, isAdmin: false, isPhysician: true });
+                } else {
+                  setUser({ ...fbUser, isAdmin: false, isPhysician: false });
+                }
+              });
             });
           }
         });

@@ -2,8 +2,10 @@
 // import PropTypes from 'prop-types';
 // import Card from 'react-bootstrap/Card';
 // import Link from 'next/link';
+// import {
+//   Button, Container, Nav, NavDropdown, Navbar,
+// } from 'react-bootstrap';
 // import { deleteCredentialDb } from '../api/credentialData';
-// import { Button, Container, Nav, NavDropdown, Navbar } from 'react-bootstrap';
 
 // function CredentialCard({ credentialObj, onUpdate }) {
 //   const deleteThisCredential = () => {

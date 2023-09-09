@@ -3,14 +3,14 @@ import {
   Container, Nav, NavDropdown, Navbar, Table,
 } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import { deletePhysicianDb } from '../api/physicianData';
 import { useAuth } from '../utils/context/authContext';
+import { deletePhysicianRequestDb } from '../api/physicianRequestData';
 
-function PhysiciansTable({ physicians, onDelete }) {
+function SubmittedApplicationsTable({ applicationsObj, onDelete }) {
   const { user } = useAuth();
-  const deleteThisPhysician = (physicianId) => {
-    if (window.confirm('Are you sure you want to delete this physician?')) {
-      deletePhysicianDb(physicianId).then(() => onDelete());
+  const deleteThisPhysicianRequest = (physicianRequestId) => {
+    if (window.confirm('Are you sure you want to delete this physicianRequest?')) {
+      deletePhysicianRequestDb(physicianRequestId).then(() => onDelete());
     }
   };
 
@@ -20,18 +20,18 @@ function PhysiciansTable({ physicians, onDelete }) {
         <thead>
           <tr>
             <th>Physician Name</th>
-            <th>Phone Number</th>
             <th>NPI Number</th>
+            <th>Status</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {
-            physicians.map((physician) => (
+            applicationsObj.map((request) => (
               <tr>
-                <td>{physician.displayName}</td>
-                <td>{physician.telephoneNumber}</td>
-                <td>{physician.npiNumber}</td>
+                <td>{request.displayName}</td>
+                <td>{request.npiNumber}</td>
+                <td>{request.status}</td>
                 <td>
                   <Navbar collapseOnSelect expand="lg">
                     <Container>
@@ -46,7 +46,7 @@ function PhysiciansTable({ physicians, onDelete }) {
                                   <NavDropdown.Item href="#action/3.2"><i className="bi bi-pencil-fill pe-3" />
                                     Edit
                                   </NavDropdown.Item>
-                                  <NavDropdown.Item onClick={() => deleteThisPhysician(physician.id)}><i className="bi bi-trash-fill pe-3" />Delete</NavDropdown.Item>
+                                  <NavDropdown.Item onClick={() => deleteThisPhysicianRequest(request.id)}><i className="bi bi-trash-fill pe-3" />Delete</NavDropdown.Item>
 
                                 </>
                               ) : <></>
@@ -66,10 +66,9 @@ function PhysiciansTable({ physicians, onDelete }) {
   );
 }
 
-// https://stackoverflow.com/questions/32325912/react-proptype-array-with-shape
-PhysiciansTable.propTypes = {
-  physicians: PropTypes.arrayOf(PropTypes.shape({
-    physicianId: PropTypes.string,
+SubmittedApplicationsTable.propTypes = {
+  applicationsObj: PropTypes.arrayOf(PropTypes.shape({
+    physicianRequestId: PropTypes.string,
     uid: PropTypes.string,
     image: PropTypes.string,
     firstName: PropTypes.string,
@@ -81,4 +80,4 @@ PhysiciansTable.propTypes = {
   onDelete: PropTypes.func.isRequired,
 };
 
-export default PhysiciansTable;
+export default SubmittedApplicationsTable;

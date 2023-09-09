@@ -39,16 +39,16 @@ export default function Home() {
   let returnHtml;
   if (!isLoading && !user.isAdmin) {
     returnHtml = (
-      <div className="my-4">
-        <div className="d-flex flex-wrap">
+      <div className="m-4 d-flex flex-grow-1">
+        <div className="d-flex flex-grow-1 flex-wrap">
           <PhysicianProfile key={physician.physicianId} physicianObj={physician} onUpdate={getSinglePhysician} />
         </div>
       </div>
     );
   } else if (!isLoading && user.isAdmin) {
     returnHtml = (
-      <div className="my-4">
-        <div className="d-flex flex-wrap">
+      <div className="m-4 d-flex flex-grow-1">
+        <div className="d-flex flex-grow-1 flex-wrap">
           <PhysiciansTable physicians={physicians} onDelete={getAllPhysicians} />
         </div>
       </div>
