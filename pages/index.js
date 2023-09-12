@@ -29,15 +29,15 @@ export default function Home() {
   };
 
   useEffect(() => {
-    if (user.isAdmin) {
-      getAllPhysicians();
-    } else {
+    if (user.isPhysician) {
       getSinglePhysician();
+    } else {
+      getAllPhysicians();
     }
   }, []);
 
   let returnHtml;
-  if (!isLoading && !user.isAdmin) {
+  if (!isLoading && user.isPhysician) {
     returnHtml = (
       <div className="m-4 d-flex flex-grow-1">
         <div className="d-flex flex-grow-1 flex-wrap">
@@ -45,7 +45,7 @@ export default function Home() {
         </div>
       </div>
     );
-  } else if (!isLoading && user.isAdmin) {
+  } else if (!isLoading) {
     returnHtml = (
       <div className="m-4 d-flex flex-grow-1">
         <div className="d-flex flex-grow-1 flex-wrap">
@@ -57,6 +57,5 @@ export default function Home() {
     return <></>;
   }
 
-  console.warn(returnHtml);
   return returnHtml;
 }

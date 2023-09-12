@@ -28,15 +28,15 @@ function PhysiciansTable({ physicians, onDelete }) {
         <tbody>
           {
             physicians.map((physician) => (
-              <tr>
-                <td>{physician.displayName}</td>
-                <td>{physician.telephoneNumber}</td>
-                <td>{physician.npiNumber}</td>
-                <td>
-                  <Navbar collapseOnSelect expand="lg">
+              <tr key={physician.physicianId}>
+                <td className="cell">{physician.displayName}</td>
+                <td className="cell">{physician.telephoneNumber}</td>
+                <td className="cell">{physician.npiNumber}</td>
+                <td className="cell">
+                  <Navbar>
                     <Container>
-                      <Navbar.Toggle aria-controls="responsive-navbar-nav"><i className="bi bi-three-dots-vertical" /></Navbar.Toggle>
-                      <Navbar.Collapse id="responsive-navbar-nav">
+                      <Navbar.Toggle><i className="bi bi-three-dots-vertical" /></Navbar.Toggle>
+                      <Navbar.Collapse>
                         <Nav className="me-auto d-flex flex-grow-1 justify-content-between">
                           <NavDropdown title={<i className="bi bi-three-dots-vertical icon-button" />} id="three-dot-nav-dropdown">
                             <NavDropdown.Item href="/"><i className="bi bi-eye-fill pe-3" />View</NavDropdown.Item>

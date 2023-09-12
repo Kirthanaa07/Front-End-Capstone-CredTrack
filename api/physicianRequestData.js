@@ -2,15 +2,21 @@ import { clientCredentials } from '../utils/client';
 
 const endpoint = clientCredentials.databaseURL;
 
-const getAllPhysiciansRequestDb = (credentialId) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/physicianRequest/${credentialId}.json`, {
+const getAllPhysiciansRequestDb = () => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/physicianRequest.json`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
     },
   })
     .then((response) => response.json())
-    .then((data) => { resolve(data); })
+    .then((data) => {
+      if (data) {
+        resolve(Object.values(data));
+      } else {
+        resolve([]);
+      }
+    })
     .catch(reject);
 });
 

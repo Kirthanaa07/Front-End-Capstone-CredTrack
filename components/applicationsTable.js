@@ -5,13 +5,41 @@ import {
 import PropTypes from 'prop-types';
 import { useAuth } from '../utils/context/authContext';
 import { deletePhysicianRequestDb } from '../api/physicianRequestData';
+import getPhysicianByNpiNumber from '../api/externalData';
+import { createPhysicianDb, updatePhysicianDb } from '../api/physicianData';
 
-function SubmittedApplicationsTable({ applicationsObj, onDelete }) {
+function SubmittedApplicationsTable({ applications, onDelete }) {
   const { user } = useAuth();
   const deleteThisPhysicianRequest = (physicianRequestId) => {
     if (window.confirm('Are you sure you want to delete this physicianRequest?')) {
       deletePhysicianRequestDb(physicianRequestId).then(() => onDelete());
     }
+  };
+
+  const getPhysicianByNpiAndImport = (request) => {
+    getPhysicianByNpiNumber(request.npiNumber).then((data) => {
+      if (data) {
+        const address = data.addresses.find((a) => a.address_purpose === 'LOCATION');
+        const payload = {
+          uid: request.uid,
+          displayName: request.displayName,
+          image: 'https://img.freepik.com/premium-vector/avatar-female-doctor-with-black-hair-doctor-with-stethoscope-vector-illustrationxa_276184-33.jpg?w=826',
+          address1: address.address_1,
+          address2: address.address_2 ? address.address_2 : '',
+          city: address.city,
+          state: address.state,
+          postalCode: address.postal_code,
+          telephoneNumber: data.basic.authorized_official_telephone_number,
+        };
+        createPhysicianDb(payload).then(({ name }) => {
+          const patchPayload = { physicianId: name };
+          updatePhysicianDb(patchPayload);
+          alert('Physician Import Successful!');
+        });
+      } else {
+        alert('Invalid NPI number.');
+      }
+    });
   };
 
   return (
@@ -27,26 +55,24 @@ function SubmittedApplicationsTable({ applicationsObj, onDelete }) {
         </thead>
         <tbody>
           {
-            applicationsObj.map((request) => (
-              <tr>
-                <td>{request.displayName}</td>
-                <td>{request.npiNumber}</td>
-                <td>{request.status}</td>
+            applications.map((request) => (
+              <tr key={request.physicianRequestId}>
+                <td className="cell">{request.displayName}</td>
+                <td className="cell">{request.npiNumber}</td>
+                <td className="cell">{request.status}</td>
                 <td>
-                  <Navbar collapseOnSelect expand="lg">
+                  <Navbar expand="lg">
                     <Container>
-                      <Navbar.Toggle aria-controls="responsive-navbar-nav"><i className="bi bi-three-dots-vertical" /></Navbar.Toggle>
-                      <Navbar.Collapse id="responsive-navbar-nav">
+                      <Navbar.Toggle><i className="bi bi-three-dots-vertical" /></Navbar.Toggle>
+                      <Navbar.Collapse>
                         <Nav className="me-auto d-flex flex-grow-1 justify-content-between">
                           <NavDropdown title={<i className="bi bi-three-dots-vertical icon-button" />} id="three-dot-nav-dropdown">
-                            <NavDropdown.Item href="/"><i className="bi bi-eye-fill pe-3" />View</NavDropdown.Item>
+
                             {
-                              user.isAdmin ? (
+                              user.isAdmin && request.status === 'Submitted' ? (
                                 <>
-                                  <NavDropdown.Item href="#action/3.2"><i className="bi bi-pencil-fill pe-3" />
-                                    Edit
-                                  </NavDropdown.Item>
-                                  <NavDropdown.Item onClick={() => deleteThisPhysicianRequest(request.id)}><i className="bi bi-trash-fill pe-3" />Delete</NavDropdown.Item>
+                                  <NavDropdown.Item onClick={() => getPhysicianByNpiAndImport(request)}><i className="bi bi-check2-circle pe-3" />Approve and Import</NavDropdown.Item>
+                                  <NavDropdown.Item onClick={() => deleteThisPhysicianRequest(request.id)}><i className="bi bi-trash-fill pe-3" />Reject</NavDropdown.Item>
 
                                 </>
                               ) : <></>
@@ -67,7 +93,7 @@ function SubmittedApplicationsTable({ applicationsObj, onDelete }) {
 }
 
 SubmittedApplicationsTable.propTypes = {
-  applicationsObj: PropTypes.arrayOf(PropTypes.shape({
+  applications: PropTypes.arrayOf(PropTypes.shape({
     physicianRequestId: PropTypes.string,
     uid: PropTypes.string,
     image: PropTypes.string,

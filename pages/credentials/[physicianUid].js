@@ -45,9 +45,9 @@ export default function ViewCredential() {
                   <div>{credentialType.name}</div>
 
                 </ListGroup.Item>
-                <Navbar collapseOnSelect className="show-top">
-                  <Navbar.Toggle aria-controls="responsive-navbar-nav"><i className="bi bi-three-dots-vertical" /></Navbar.Toggle>
-                  <Navbar.Collapse id="responsive-navbar-nav">
+                <Navbar className="show-top">
+                  <Navbar.Toggle><i className="bi bi-three-dots-vertical" /></Navbar.Toggle>
+                  <Navbar.Collapse>
                     <Nav className="me-auto d-flex flex-grow-1 justify-content-between">
                       <NavDropdown title={<i className="bi bi-three-dots-vertical icon-button" />} id="three-dot-nav-dropdown">
                         <NavDropdown.Item href="/credentials/edit/[credentialId].js"><i className="bi bi-pencil-fill pe-3" />
