@@ -78,8 +78,12 @@ a {
   margin-left: 50%;
 }
 
-.show-top {
+.show-front {
   z-index: 9999;
+}
+
+.show-behind {
+  z-index: 0 !important;
 }
 
 .cell {

@@ -55,8 +55,8 @@ function PhysicianForm({ physicianObj }) {
         <Form.Control
           type="text"
           placeholder="Enter your first name"
-          name="first_name"
-          value={formInput.firstName}
+          name="displayName"
+          value={formInput.displayName}
           onChange={handleChange}
           required
         />

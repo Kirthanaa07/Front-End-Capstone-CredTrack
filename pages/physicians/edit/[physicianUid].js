@@ -4,13 +4,21 @@ import { getSinglePhysicianDb } from '../../../api/physicianData';
 import PhysicianForm from '../../../components/form/addPhysicianForm';
 
 function EditPhysician() {
+  const [isLoading, setIsLoading] = useState(true);
   const [editItem, setEditItem] = useState({});
   const router = useRouter();
-  const { physicianId } = router.query;
+  const { physicianUid } = router.query;
   useEffect(() => {
-    getSinglePhysicianDb(physicianId).then(setEditItem);
-  }, [physicianId]);
-  return (<PhysicianForm obj={editItem} />);
+    getSinglePhysicianDb(physicianUid).then((data) => {
+      setEditItem(data);
+      setIsLoading(false);
+    });
+  }, [physicianUid]);
+
+  if (!isLoading) {
+    return (<PhysicianForm physicianObj={editItem} />);
+  }
+  return <></>;
 }
 
 export default EditPhysician;

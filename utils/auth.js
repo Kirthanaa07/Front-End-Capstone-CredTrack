@@ -6,7 +6,7 @@ const signIn = () => {
   provider.setCustomParameters({
     prompt: 'select_account',
   });
-  firebase.auth().signInWithPopup(provider);
+  firebase.auth().signInWithRedirect(provider);
 };
 
 const signOut = () => {

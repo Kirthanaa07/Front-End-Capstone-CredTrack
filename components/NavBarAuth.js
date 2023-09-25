@@ -36,18 +36,6 @@ export default function NavBarAuth() {
                       </Link>
                     </div>
                     <div className="d-flex flex-row align-items-center">
-                      <i className="bi bi-clipboard-check-fill white-icon" />
-                      <Link passHref href="/">
-                        <Nav.Link>Approved Credentials</Nav.Link>
-                      </Link>
-                    </div>
-                    <div className="d-flex flex-row align-items-center">
-                      <i className="bi bi-clipboard-x-fill white-icon" />
-                      <Link passHref href="/">
-                        <Nav.Link>Declined Credentials</Nav.Link>
-                      </Link>
-                    </div>
-                    <div className="d-flex flex-row align-items-center">
                       <i className="bi bi-menu-button-wide-fill white-icon" />
                       <Link passHref href="/physician-applications">
                         <Nav.Link>Applications</Nav.Link>

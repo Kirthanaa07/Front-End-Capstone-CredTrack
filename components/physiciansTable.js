@@ -3,15 +3,22 @@ import {
   Container, Nav, NavDropdown, Navbar, Table,
 } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import { useRouter } from 'next/router';
 import { deletePhysicianDb } from '../api/physicianData';
 import { useAuth } from '../utils/context/authContext';
 
 function PhysiciansTable({ physicians, onDelete }) {
   const { user } = useAuth();
+  const router = useRouter();
+
   const deleteThisPhysician = (physicianId) => {
     if (window.confirm('Are you sure you want to delete this physician?')) {
       deletePhysicianDb(physicianId).then(() => onDelete());
     }
+  };
+
+  const viewPhysician = (physicianUid) => {
+    router.push(`/credentials/${physicianUid}`);
   };
 
   return (
@@ -39,14 +46,14 @@ function PhysiciansTable({ physicians, onDelete }) {
                       <Navbar.Collapse>
                         <Nav className="me-auto d-flex flex-grow-1 justify-content-between">
                           <NavDropdown title={<i className="bi bi-three-dots-vertical icon-button" />} id="three-dot-nav-dropdown">
-                            <NavDropdown.Item href="/"><i className="bi bi-eye-fill pe-3" />View</NavDropdown.Item>
+                            <NavDropdown.Item onClick={() => viewPhysician(physician.uid)}><i className="bi bi-eye-fill pe-3" />View</NavDropdown.Item>
                             {
                               user.isAdmin ? (
                                 <>
-                                  <NavDropdown.Item href="#action/3.2"><i className="bi bi-pencil-fill pe-3" />
+                                  <NavDropdown.Item href={`/physicians/edit/${physician.uid}`}><i className="bi bi-pencil-fill pe-3" />
                                     Edit
                                   </NavDropdown.Item>
-                                  <NavDropdown.Item onClick={() => deleteThisPhysician(physician.id)}><i className="bi bi-trash-fill pe-3" />Delete</NavDropdown.Item>
+                                  <NavDropdown.Item onClick={() => deleteThisPhysician(physician.physicianId)}><i className="bi bi-trash-fill pe-3" />Delete</NavDropdown.Item>
 
                                 </>
                               ) : <></>

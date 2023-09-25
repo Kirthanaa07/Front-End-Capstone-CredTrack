@@ -72,7 +72,7 @@ function SubmittedApplicationsTable({ applications, onDelete }) {
                               user.isAdmin && request.status === 'Submitted' ? (
                                 <>
                                   <NavDropdown.Item onClick={() => getPhysicianByNpiAndImport(request)}><i className="bi bi-check2-circle pe-3" />Approve and Import</NavDropdown.Item>
-                                  <NavDropdown.Item onClick={() => deleteThisPhysicianRequest(request.id)}><i className="bi bi-trash-fill pe-3" />Reject</NavDropdown.Item>
+                                  <NavDropdown.Item onClick={() => deleteThisPhysicianRequest(request.physicianRequestId)}><i className="bi bi-trash-fill pe-3" />Reject</NavDropdown.Item>
 
                                 </>
                               ) : <></>

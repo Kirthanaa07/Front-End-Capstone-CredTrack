@@ -1,9 +1,8 @@
 // import React from 'react';
 // import PropTypes from 'prop-types';
 // import Card from 'react-bootstrap/Card';
-// import Link from 'next/link';
 // import {
-//   Button, Container, Nav, NavDropdown, Navbar,
+//   Container, Nav, NavDropdown, Navbar,
 // } from 'react-bootstrap';
 // import { deleteCredentialDb } from '../api/credentialData';
 
@@ -23,28 +22,22 @@
 //       />
 //       <Card.Body>
 //         <Card.Title>{credentialObj.credentialType}</Card.Title>
-//         <h4>Valid till: {credentialObj.expirationDate}</h4>
-//         <Navbar collapseOnSelect expand="lg">
+//         <Navbar>
 //           <Container>
-//             <Navbar.Toggle aria-controls="responsive-navbar-nav"><i className="bi bi-three-dots-vertical" /></Navbar.Toggle>
-//             <Navbar.Collapse id="responsive-navbar-nav">
+//             <Navbar.Toggle><i className="bi bi-three-dots-vertical" /></Navbar.Toggle>
+//             <Navbar.Collapse>
 //               <Nav className="me-auto d-flex flex-grow-1 justify-content-between">
 //                 <NavDropdown title={<i className="bi bi-three-dots-vertical icon-button" />} id="three-dot-nav-dropdown">
 //                   <NavDropdown.Item href="/"><i className="bi bi-eye-fill pe-3" />View</NavDropdown.Item>
-//                   <NavDropdown.Item href="#action/3.2"><i className="bi bi-pencil-fill pe-3" />
+//                   <NavDropdown.Item href={`/credentials/edit/${credentialObj.credentialId}`} passHref><i className="bi bi-pencil-fill pe-3" />
 //                     Edit
 //                   </NavDropdown.Item>
-//                   <NavDropdown.Item href="#action/3.3"><i className="bi bi-trash-fill pe-3" />Delete</NavDropdown.Item>
+//                   <NavDropdown.Item onClick={() => deleteThisCredential(credentialObj.credentialId)}><i className="bi bi-trash-fill pe-3" />Delete</NavDropdown.Item>
 //                 </NavDropdown>
 //               </Nav>
 //             </Navbar.Collapse>
 //           </Container>
 //         </Navbar>
-
-//         <Link href={`/credentials/edit/${credentialObj.credentialId}`} passHref>
-//           <Button variant="primary" className="m-2">EDIT</Button>
-//         </Link>
-//         <Button variant="danger" onClick={deleteThisCredential} className="m-2">DELETE</Button>
 //       </Card.Body>
 //     </Card>
 //   );
