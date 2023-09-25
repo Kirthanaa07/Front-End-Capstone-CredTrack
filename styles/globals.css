@@ -1,5 +1,20 @@
 @import 'bootstrap/dist/css/bootstrap.css';
 
+html {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+body,
+.flex-body {
+  display: flex;
+  flex: 1;
+  /* no need anymore to deal with height/width */
+  flex-direction: column;
+  background-color: rgb(63, 165, 238);
+}
+
 html,
 body {
   padding: 0;
@@ -13,15 +28,69 @@ a {
   text-decoration: none;
 }
 
+#__next {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
 * {
   box-sizing: border-box;
 }
 
-body {
-  background-color: #88effd;
+.navbar-fixed-top {
+  background-color: rgb(9, 92, 235);
 }
 
 .b-white {
   background-color: white;
   border-radius: 10px;
+}
+
+#three-dot-nav-dropdown.dropdown-toggle.nav-link::after {
+  display: none !important;
+}
+
+.icon-button {
+  padding: 10px;
+}
+
+.icon-button:hover {
+  background-color: lightgray;
+  border-radius: 15px;
+}
+
+.cred-image {
+  height: auto;
+}
+
+.left-panel {
+  position: fixed;
+}
+
+.right-panel {
+  height: 100%;
+  width: 100%;
+  max-height: 100% !important;
+  max-height: 100% !important;
+  overflow-y: auto;
+  flex: 1;
+  margin-left: 50%;
+}
+
+.show-front {
+  z-index: 9999;
+}
+
+.show-behind {
+  z-index: 0 !important;
+}
+
+.cell {
+  vertical-align: middle;
+}
+
+.white-icon {
+  color: lightgray !important;
+  transform: scale(1.2);
 }

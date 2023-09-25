@@ -2,7 +2,7 @@ import { clientCredentials } from '../utils/client';
 
 const endpoint = clientCredentials.databaseURL;
 
-const getSinglePhysician = (uid) => new Promise((resolve, reject) => {
+const getSinglePhysicianDb = (uid) => new Promise((resolve, reject) => {
   fetch(`${endpoint}/physician.json?orderBy="uid"&equalTo="${uid}"`, {
     method: 'GET',
     headers: {
@@ -21,7 +21,7 @@ const getSinglePhysician = (uid) => new Promise((resolve, reject) => {
 });
 
 // TODO: CREATE PHYSICIAN
-const createPhysician = (payload) => new Promise((resolve, reject) => {
+const createPhysicianDb = (payload) => new Promise((resolve, reject) => {
   fetch(`${endpoint}/physician.json`, {
     method: 'POST',
     headers: {
@@ -35,7 +35,7 @@ const createPhysician = (payload) => new Promise((resolve, reject) => {
 });
 
 // TODO: UPDATE PHYSICIAN
-const updatePhysician = (payload) => new Promise((resolve, reject) => {
+const updatePhysicianDb = (payload) => new Promise((resolve, reject) => {
   fetch(`${endpoint}/physician/${payload.physicianId}.json`, {
     method: 'PATCH',
     headers: {
@@ -49,7 +49,7 @@ const updatePhysician = (payload) => new Promise((resolve, reject) => {
 });
 
 // TODO: DELETE PHYSICIAN
-const deletePhysician = (physicianId) => new Promise((resolve, reject) => {
+const deletePhysicianDb = (physicianId) => new Promise((resolve, reject) => {
   fetch(`${endpoint}/physician/${physicianId}.json`, {
     method: 'DELETE',
     headers: {
@@ -62,7 +62,7 @@ const deletePhysician = (physicianId) => new Promise((resolve, reject) => {
 });
 
 // TODO: GET ALL PHYSICIAN
-const getAllPhysicians = () => new Promise((resolve, reject) => {
+const getAllPhysiciansDb = () => new Promise((resolve, reject) => {
   fetch(`${endpoint}/physician.json`, {
     method: 'GET',
     headers: {
@@ -81,9 +81,9 @@ const getAllPhysicians = () => new Promise((resolve, reject) => {
 });
 
 export {
-  getSinglePhysician,
-  createPhysician,
-  updatePhysician,
-  deletePhysician,
-  getAllPhysicians,
+  getSinglePhysicianDb,
+  createPhysicianDb,
+  updatePhysicianDb,
+  deletePhysicianDb,
+  getAllPhysiciansDb,
 };

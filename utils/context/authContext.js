@@ -8,6 +8,8 @@ import React, {
   useState,
 } from 'react';
 import { firebase } from '../client';
+import { createUserDb, getSingleUserDb, updateUserDb } from '../../api/userData';
+import { getSinglePhysicianDb } from '../../api/physicianData';
 
 const AuthContext = createContext();
 
@@ -20,15 +22,50 @@ const AuthProvider = (props) => {
   // null = application initial state, not yet loaded
   // false = user is not logged in, but the app has loaded
   // an object/value = user is logged in
-
+  // https://medium.com/berlin-tech-blog/how-to-get-rid-of-cant-perform-a-react-state-update-on-an-unmounted-component-or-why-it-is-cd5e8132d6c6
   useEffect(() => {
+    let isMounted = true;
     firebase.auth().onAuthStateChanged((fbUser) => {
       if (fbUser) {
-        setUser(fbUser);
-      } else {
+        getSingleUserDb(fbUser.uid).then((data) => {
+          if (data) {
+            getSinglePhysicianDb(fbUser.uid).then((physician) => {
+              if (physician) {
+                if (isMounted) {
+                  setUser({ ...fbUser, isAdmin: data.isAdmin, isPhysician: true });
+                }
+              } else if (isMounted) {
+                setUser({ ...fbUser, isAdmin: data.isAdmin, isPhysician: false });
+              }
+            });
+          } else {
+            createUserDb({
+              uid: fbUser.uid,
+              displayName: fbUser.displayName,
+              isAdmin: false,
+            }).then(({ name }) => {
+              const patchPayload = { userId: name };
+              updateUserDb(patchPayload);
+              getSinglePhysicianDb(fbUser.uid).then((physician) => {
+                if (physician) {
+                  if (isMounted) {
+                    setUser({ ...fbUser, isAdmin: false, isPhysician: true });
+                  }
+                } else if (isMounted) {
+                  setUser({ ...fbUser, isAdmin: false, isPhysician: false });
+                }
+              });
+            });
+          }
+        });
+      } else if (isMounted) {
         setUser(false);
       }
     }); // creates a single global listener for auth state changed
+    // Clean-up:
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const value = useMemo( // https://reactjs.org/docs/hooks-reference.html#usememo

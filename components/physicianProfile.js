@@ -8,7 +8,7 @@ function PhysicianProfile({ physicianObj }) {
   return (
     <>
       <div className="d-flex flex-column flex-grow-1 gap-3 p-2 b-white">
-        <div className="d-flex flex-row gap-3">
+        <div className="d-flex flex-row flex-grow-1 gap-3">
           <Image src={physicianObj.image} alt={physicianObj.firstName} />
           <div className="d-flex flex-column flex-grow-1">
             <p>{physicianObj.firstName} {physicianObj.lastName}</p>

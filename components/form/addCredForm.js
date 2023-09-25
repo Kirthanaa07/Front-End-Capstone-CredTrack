@@ -5,8 +5,8 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import { Button } from 'react-bootstrap';
 import { useAuth } from '../../utils/context/authContext';
-import { createCredential, updateCredential } from '../../api/credentialData';
-import { getAllCredentialTypes } from '../../api/credentialTypeData';
+import { createCredentialDb, updateCredentialDb } from '../../api/credentialData';
+import getAllCredentialTypesDb from '../../api/credentialTypeData';
 
 const initialState = {
   credentialType: '',
@@ -21,7 +21,7 @@ function CredentialForm({ credentialObj }) {
   const { user } = useAuth();
 
   useEffect(() => {
-    getAllCredentialTypes().then(setCredentialTypes);
+    getAllCredentialTypesDb().then(setCredentialTypes);
 
     if (credentialObj.credentialId) setFormInput(credentialObj);
   }, [credentialObj, user]);
@@ -37,12 +37,12 @@ function CredentialForm({ credentialObj }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (credentialObj.credentialId) {
-      updateCredential(formInput).then(() => router.push(`/credentials/${credentialObj.uid}`));
+      updateCredentialDb(formInput).then(() => router.push(`/credentials/${credentialObj.uid}`));
     } else {
       const payload = { ...formInput, uid: user.uid };
-      createCredential(payload).then(({ name }) => {
+      createCredentialDb(payload).then(({ name }) => {
         const patchPayload = { credentialId: name };
-        updateCredential(patchPayload).then(() => {
+        updateCredentialDb(patchPayload).then(() => {
           router.push(`/credentials/${user.uid}`);
         });
       });

@@ -3,7 +3,10 @@ import 'firebase/auth';
 
 const signIn = () => {
   const provider = new firebase.auth.GoogleAuthProvider();
-  firebase.auth().signInWithPopup(provider);
+  provider.setCustomParameters({
+    prompt: 'select_account',
+  });
+  firebase.auth().signInWithRedirect(provider);
 };
 
 const signOut = () => {

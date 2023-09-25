@@ -5,7 +5,7 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import { Button } from 'react-bootstrap';
 import { useAuth } from '../../utils/context/authContext';
-import { updatePhysician, createPhysician } from '../../api/physicianData';
+import { updatePhysicianDb, createPhysicianDb } from '../../api/physicianData';
 
 const initialState = {
   physicianId: '',
@@ -34,12 +34,12 @@ function PhysicianForm({ physicianObj }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (physicianObj.physicianId) {
-      updatePhysician(formInput).then(() => router.push('/'));
+      updatePhysicianDb(formInput).then(() => router.push('/'));
     } else {
       const payload = { ...formInput, uid: user.uid };
-      createPhysician(payload).then(({ name }) => {
+      createPhysicianDb(payload).then(({ name }) => {
         const patchPayload = { physicianId: name };
-        updatePhysician(patchPayload).then(() => {
+        updatePhysicianDb(patchPayload).then(() => {
           router.push('/');
         });
       });
@@ -55,8 +55,8 @@ function PhysicianForm({ physicianObj }) {
         <Form.Control
           type="text"
           placeholder="Enter your first name"
-          name="first_name"
-          value={formInput.firstName}
+          name="displayName"
+          value={formInput.displayName}
           onChange={handleChange}
           required
         />
