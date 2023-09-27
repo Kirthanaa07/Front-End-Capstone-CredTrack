@@ -1,9 +1,11 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import Link from 'next/link';
+import SidebarMenu from 'react-bootstrap-sidebar-menu';
 import {
-  Image, Navbar, Container, Nav, Button,
+  Image, Button,
 } from 'react-bootstrap';
+// import SidebarMenu from 'react-bootstrap-sidebar-menu';
 import { signOut } from '../utils/auth';
 import { useAuth } from '../utils/context/authContext';
 
@@ -19,63 +21,62 @@ export default function NavBarAuth() {
   }
 
   return (
-    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" className="navbar-fixed-top">
-      <Container className="d-flex gap-4">
-        <Image src="/LOGO.png" alt="LOGO" />
-        <Navbar.Toggle aria-controls="responsive-navbar-nav" className="nav-bar" />
-        <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="me-auto d-flex flex-grow-1 justify-content-between align-items-center">
-            <div className="d-flex flex-row gap-3">
-              {
-                user.isAdmin ? (
-                  <>
-                    <div className="d-flex flex-row align-items-center">
-                      <i className="bi bi-clipboard-plus-fill white-icon" />
-                      <Link passHref href="/">
-                        <Nav.Link>Physicians</Nav.Link>
-                      </Link>
-                    </div>
-                    <div className="d-flex flex-row align-items-center">
-                      <i className="bi bi-menu-button-wide-fill white-icon" />
-                      <Link passHref href="/physician-applications">
-                        <Nav.Link>Applications</Nav.Link>
-                      </Link>
-                    </div>
-                  </>
-                ) : <></>
-              }
-              {
-                user.isPhysician ? (
-                  <>
+    <SidebarMenu className="sidebar-menu">
+      <SidebarMenu.Header>
+        <SidebarMenu.Text className="d-flex gap-4">
+          <Image src="/LOGO.png" alt="LOGO" />
+        </SidebarMenu.Text>
+      </SidebarMenu.Header>
+      <SidebarMenu.Collapse>
+        <SidebarMenu className="me-auto d-flex flex-column flex-grow-1 justify-content-between align-items-center">
+          <div className="d-flex flex-column gap-3">
+            {
+              user.isAdmin ? (
+                <>
+                  <div className="d-flex flex-row align-items-center">
+                    <i className="bi bi-clipboard-plus-fill white-icon" />
                     <Link passHref href="/">
-                      <Nav.Link>Profile</Nav.Link>
+                      <SidebarMenu.Nav.Link>Physicians</SidebarMenu.Nav.Link>
                     </Link>
-                    <Link passHref href="/credentials/new">
-                      <Nav.Link>Add Credential</Nav.Link>
+                  </div>
+                  <div className="d-flex flex-row align-items-center">
+                    <i className="bi bi-menu-button-wide-fill white-icon" />
+                    <Link passHref href="/physician-applications">
+                      <SidebarMenu.Nav.Link>Applications</SidebarMenu.Nav.Link>
                     </Link>
-                  </>
-                ) : <></>
-              }
-              {
-                !user.isPhysician && !user.isAdmin ? (
-                  <>
-                    <Link passHref href="/">
-                      <Nav.Link>Physicians</Nav.Link>
-                    </Link>
-                    <Link passHref href="/application-form/new">
-                      <Nav.Link>Apply For Physician</Nav.Link>
-                    </Link>
-                  </>
-                ) : <></>
-              }
-            </div>
+                  </div>
+                </>
+              ) : <></>
+            }
+            {
+              user.isPhysician ? (
+                <>
+                  <Link passHref href="/">
+                    <SidebarMenu.Nav.Link>Profile</SidebarMenu.Nav.Link>
+                  </Link>
+                </>
+
+              ) : <></>
+            }
+            {
+              !user.isPhysician && !user.isAdmin ? (
+                <>
+                  <Link passHref href="/">
+                    <SidebarMenu.Nav.Link>Physicians</SidebarMenu.Nav.Link>
+                  </Link>
+                  <Link passHref href="/application-form/new">
+                    <SidebarMenu.Nav.Link>Apply For Physician</SidebarMenu.Nav.Link>
+                  </Link>
+                </>
+              ) : <></>
+            }
             <div className="d-flex flex-row gap-3">
-              <Navbar.Text>{role}</Navbar.Text>
-              <Button variant="danger" onClick={signOut}>Sign Out</Button>
+              <SidebarMenu.Text>{role}</SidebarMenu.Text>
             </div>
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+            <Button variant="danger" onClick={signOut}>Sign Out</Button>
+          </div>
+        </SidebarMenu>
+      </SidebarMenu.Collapse>
+    </SidebarMenu>
   );
 }

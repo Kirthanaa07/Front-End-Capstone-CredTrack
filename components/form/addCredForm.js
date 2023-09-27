@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
+import { useRouter } from 'next/router';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
-import { Button } from 'react-bootstrap';
 import { useAuth } from '../../utils/context/authContext';
-import { createCredentialDb, updateCredentialDb } from '../../api/credentialData';
 import getAllCredentialTypesDb from '../../api/credentialTypeData';
+import { createCredentialDb, updateCredentialDb } from '../../api/credentialData';
 
 const initialState = {
   credentialType: '',
@@ -14,11 +13,11 @@ const initialState = {
   expirationDate: '',
 };
 
-function CredentialForm({ credentialObj }) {
+function CredentialForm({ credentialObj, handleSubmit }) {
   const [formInput, setFormInput] = useState(initialState);
   const [credentialTypes, setCredentialTypes] = useState([]);
-  const router = useRouter();
   const { user } = useAuth();
+  const router = useRouter();
 
   useEffect(() => {
     getAllCredentialTypesDb().then(setCredentialTypes);
@@ -34,7 +33,7 @@ function CredentialForm({ credentialObj }) {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const saveCredential = (e) => {
     e.preventDefault();
     if (credentialObj.credentialId) {
       updateCredentialDb(formInput).then(() => router.push(`/credentials/${credentialObj.uid}`));
@@ -47,11 +46,11 @@ function CredentialForm({ credentialObj }) {
         });
       });
     }
+    handleSubmit();
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <h2 className="text-white mt-5">{credentialObj.credentialId ? 'Update' : 'Add'} Cred</h2>
+    <Form onSubmit={saveCredential} id="cred-form">
       {/* CRED SELECT  */}
       <FloatingLabel controlId="floatingSelect" label="Credential Type">
         <Form.Select
@@ -99,9 +98,6 @@ function CredentialForm({ credentialObj }) {
           required
         />
       </FloatingLabel>
-
-      {/* SUBMIT BUTTON  */}
-      <Button type="submit">{credentialObj.credentialId ? 'Update' : 'Add'} Credential</Button>
     </Form>
   );
 }
@@ -114,6 +110,7 @@ CredentialForm.propTypes = {
     imageUrl: PropTypes.string,
     expirationDate: PropTypes.string,
   }),
+  handleSubmit: PropTypes.func.isRequired,
 };
 
 CredentialForm.defaultProps = {

@@ -1,4 +1,5 @@
 @import 'bootstrap/dist/css/bootstrap.css';
+/* @import 'react-bootstrap-sidebar-menu'; */
 
 html {
   height: 100%;
@@ -12,7 +13,6 @@ body,
   flex: 1;
   /* no need anymore to deal with height/width */
   flex-direction: column;
-  background-color: rgb(63, 165, 238);
 }
 
 html,
@@ -21,6 +21,7 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  background-color: rgb(14, 46, 75);
 }
 
 a {
@@ -93,4 +94,18 @@ a {
 .white-icon {
   color: lightgray !important;
   transform: scale(1.2);
+}
+
+.contact-info {
+  display: flex;
+  justify-content: between;
+}
+
+.bg-image {
+  opacity: 25;
+}
+
+.sidebar-menu{
+  color: white;
+  background-color: #212529;
 }

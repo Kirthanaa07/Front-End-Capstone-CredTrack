@@ -4,7 +4,7 @@ import {
 } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { useAuth } from '../utils/context/authContext';
-import { deletePhysicianRequestDb } from '../api/physicianRequestData';
+import { deletePhysicianRequestDb, updatePhysicianRequestDb } from '../api/physicianRequestData';
 import getPhysicianByNpiNumber from '../api/externalData';
 import { createPhysicianDb, updatePhysicianDb } from '../api/physicianData';
 
@@ -23,6 +23,7 @@ function SubmittedApplicationsTable({ applications, onDelete }) {
         const payload = {
           uid: request.uid,
           displayName: request.displayName,
+          npiNumber: data.number,
           image: 'https://img.freepik.com/premium-vector/avatar-female-doctor-with-black-hair-doctor-with-stethoscope-vector-illustrationxa_276184-33.jpg?w=826',
           address1: address.address_1,
           address2: address.address_2 ? address.address_2 : '',
@@ -34,6 +35,11 @@ function SubmittedApplicationsTable({ applications, onDelete }) {
         createPhysicianDb(payload).then(({ name }) => {
           const patchPayload = { physicianId: name };
           updatePhysicianDb(patchPayload);
+          const statusLoad = {
+            physicianRequestId: request.physicianRequestId,
+            status: 'Approved',
+          };
+          updatePhysicianRequestDb(statusLoad);
           alert('Physician Import Successful!');
         });
       } else {

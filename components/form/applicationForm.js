@@ -23,6 +23,7 @@ function ApplicationForm() {
     }));
   };
   const handleSubmit = (e) => {
+    alert('Your NPI number is taken for review successfully');
     e.preventDefault();
     const payload = {
       ...formInput, uid: user.uid, displayName: user.displayName, status: 'Submitted',

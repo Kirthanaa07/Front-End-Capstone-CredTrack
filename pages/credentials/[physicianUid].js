@@ -2,12 +2,16 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import {
-  Nav, NavDropdown, Navbar, ListGroup, Image,
+  Nav, Navbar, ListGroup, Image, Button, Modal, Form,
 } from 'react-bootstrap';
 import { deleteCredentialDb, getAllCredentialsForPhysicianDb } from '../../api/credentialData';
 import getAllCredentialTypes from '../../api/credentialTypeData';
 
 export default function ViewCredential() {
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const [isLoading, setIsLoading] = useState(true);
   const [credentialDetails, setCredentialDetails] = useState([]);
   const [credImg, setCredentialImg] = useState();
@@ -63,17 +67,46 @@ export default function ViewCredential() {
                 <div key={credentialType.credentialTypeId} className="d-flex flex-row align-items-center justify-content-between">
                   <ListGroup.Item action onClick={() => showCredential(credentialType)}>
                     <div>{credentialType.name}</div>
-
                   </ListGroup.Item>
                   <Navbar className="show-behind">
                     <Navbar.Collapse>
                       <Nav className="me-auto d-flex flex-grow-1 justify-content-between">
-                        <NavDropdown title={<i className="bi bi-three-dots-vertical icon-button" />} className="show-front" id="three-dot-nav-dropdown">
-                          <NavDropdown.Item onClick={() => editCredential(credentialType)}><i className="bi bi-pencil-fill pe-3" />
-                            Edit
-                          </NavDropdown.Item>
-                          <NavDropdown.Item onClick={() => deleteThisCredential(credentialType)}><i className="bi bi-trash-fill pe-3" />Delete</NavDropdown.Item>
-                        </NavDropdown>
+                        <Button variant="outline-info" onClick={handleShow}>
+                          Edit
+                        </Button>
+                        <Modal show={show} onHide={handleClose}>
+                          <Modal.Header closeButton>
+                            <Modal.Title>Modal heading</Modal.Title>
+                          </Modal.Header>
+                          <Modal.Body>
+                            <Form>
+                              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                                <Form.Label>Email address</Form.Label>
+                                <Form.Control
+                                  type="email"
+                                  placeholder="name@example.com"
+                                  autoFocus
+                                />
+                              </Form.Group>
+                              <Form.Group
+                                className="mb-3"
+                                controlId="exampleForm.ControlTextarea1"
+                              >
+                                <Form.Label>Example textarea</Form.Label>
+                                <Form.Control as="textarea" rows={3} />
+                              </Form.Group>
+                            </Form>
+                          </Modal.Body>
+                          <Modal.Footer>
+                            <Button variant="secondary" onClick={handleClose}>
+                              Close
+                            </Button>
+                            <Button variant="primary" onClick={handleClose}>
+                              Save Changes
+                            </Button>
+                          </Modal.Footer>
+                        </Modal>
+                        <Button variant="outline-danger" onClick={() => deleteThisCredential(credentialType)}>Delete</Button>
                       </Nav>
                     </Navbar.Collapse>
                   </Navbar>
