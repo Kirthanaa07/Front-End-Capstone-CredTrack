@@ -19,9 +19,8 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  background-color: rgb(14, 46, 75);
+  background-color:rgb(45, 103, 161);
+  color: black;
 }
 
 a {
@@ -37,10 +36,6 @@ a {
 
 * {
   box-sizing: border-box;
-}
-
-.navbar-fixed-top {
-  background-color: rgb(9, 92, 235);
 }
 
 .b-white {
@@ -87,10 +82,6 @@ a {
   z-index: 0 !important;
 }
 
-.cell {
-  vertical-align: middle;
-}
-
 .white-icon {
   color: lightgray !important;
   transform: scale(1.2);
@@ -105,7 +96,55 @@ a {
   opacity: 25;
 }
 
-.sidebar-menu{
-  color: white;
-  background-color: #212529;
+.sidebar-menu {
+  color:whitesmoke;
+  background-color:rgb(8, 32, 67);
+}
+
+.approved {
+  background-color: green;
+}
+
+.reject {
+  background-color: red;
+}
+
+.physician-card {
+  background-color: rgb(78, 76, 76)
+}
+
+.card-btn {
+  display: flex;
+  justify-content: space-between;
+}
+
+.view-btn {
+  background-color: white;
+  color: black;
+  border: white;
+}
+
+.edit-btn {
+  background-color: white;
+  color: black;
+  border: white;
+}
+
+.delete-btn {
+  background-color: white;
+  color: black;
+  border: white;
+}
+
+.app-name{
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.heading{
+display: flex;
+justify-content: center;
+}
+
+.profile-text{
+  color:black;
 }

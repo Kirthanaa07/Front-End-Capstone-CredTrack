@@ -2,10 +2,11 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import {
-  Nav, Navbar, ListGroup, Image, Button, Modal, Form,
+  Nav, Navbar, ListGroup, Image, Button, Modal,
 } from 'react-bootstrap';
 import { deleteCredentialDb, getAllCredentialsForPhysicianDb } from '../../api/credentialData';
 import getAllCredentialTypes from '../../api/credentialTypeData';
+import EditCredential from './edit/[credentialId]';
 
 export default function ViewCredential() {
   const [show, setShow] = useState(false);
@@ -15,7 +16,6 @@ export default function ViewCredential() {
   const [isLoading, setIsLoading] = useState(true);
   const [credentialDetails, setCredentialDetails] = useState([]);
   const [credImg, setCredentialImg] = useState();
-  const [credentialTypes, setCredentialTypes] = useState([]);
   const router = useRouter();
   const { physicianUid } = router.query;
 
@@ -28,13 +28,18 @@ export default function ViewCredential() {
     }
   };
 
-  const getAllCredentialTypesList = () => {
-    getAllCredentialTypes().then(setCredentialTypes);
-  };
-
   const getAllPhysicianCredentials = (uid) => {
-    getAllCredentialsForPhysicianDb(uid)
-      .then(setCredentialDetails)
+    getAllCredentialsForPhysicianDb(uid).then((creds) => {
+      getAllCredentialTypes().then((credTypes) => {
+        const expandedCt = credTypes.map((ct) => {
+          const pc = creds.find((c) => c.credentialType === ct.name);
+          return {
+            ...ct, physicianCredential: pc,
+          };
+        });
+        setCredentialDetails(expandedCt);
+      });
+    })
       .then(setIsLoading(false));
   };
 
@@ -45,15 +50,14 @@ export default function ViewCredential() {
     }
   };
 
-  const editCredential = (credentialType) => {
-    const cred = credentialDetails.find((c) => c.credentialType === credentialType.name);
-    if (cred) {
-      router.push(`/credentials/edit/${cred.credentialId}`);
-    }
-  };
+  // const editCredential = (credentialType) => {
+  //   const cred = credentialDetails.find((c) => c.credentialType === credentialType.name);
+  //   if (cred) {
+  //     router.push(`/credentials/edit/${cred.credentialId}`);
+  //   }
+  // };
 
   useEffect(() => {
-    getAllCredentialTypesList();
     getAllPhysicianCredentials(physicianUid);
   }, [physicianUid]);
 
@@ -63,10 +67,21 @@ export default function ViewCredential() {
         <div className="d-flex flex-column flex-grow-1 left-panel">
           <ListGroup>
             {
-              credentialTypes.map((credentialType) => (
-                <div key={credentialType.credentialTypeId} className="d-flex flex-row align-items-center justify-content-between">
-                  <ListGroup.Item action onClick={() => showCredential(credentialType)}>
-                    <div>{credentialType.name}</div>
+              credentialDetails.map((credentialDetail) => (
+                <div key={credentialDetail.credentialTypeId} className="d-flex flex-row align-items-center justify-content-between">
+                  <ListGroup.Item action onClick={() => showCredential(credentialDetail)}>
+                    <div>{credentialDetail.name}
+                      {credentialDetail.physicianCredential?.approvalStatus === 'Approved' ? (
+                        <div className="approve">
+                          <i className="bi bi-check-square approved" />
+                        </div>
+                      ) : <></>}
+                      {credentialDetail.physicianCredential?.approvalStatus === 'Rejected' ? (
+                        <div className="rejected">
+                          <i className="bi bi-x-square reject" />
+                        </div>
+                      ) : <></>}
+                    </div>
                   </ListGroup.Item>
                   <Navbar className="show-behind">
                     <Navbar.Collapse>
@@ -79,23 +94,7 @@ export default function ViewCredential() {
                             <Modal.Title>Modal heading</Modal.Title>
                           </Modal.Header>
                           <Modal.Body>
-                            <Form>
-                              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                                <Form.Label>Email address</Form.Label>
-                                <Form.Control
-                                  type="email"
-                                  placeholder="name@example.com"
-                                  autoFocus
-                                />
-                              </Form.Group>
-                              <Form.Group
-                                className="mb-3"
-                                controlId="exampleForm.ControlTextarea1"
-                              >
-                                <Form.Label>Example textarea</Form.Label>
-                                <Form.Control as="textarea" rows={3} />
-                              </Form.Group>
-                            </Form>
+                            <EditCredential />
                           </Modal.Body>
                           <Modal.Footer>
                             <Button variant="secondary" onClick={handleClose}>
@@ -106,7 +105,7 @@ export default function ViewCredential() {
                             </Button>
                           </Modal.Footer>
                         </Modal>
-                        <Button variant="outline-danger" onClick={() => deleteThisCredential(credentialType)}>Delete</Button>
+                        <Button variant="outline-danger" onClick={() => deleteThisCredential(credentialDetail)}>Delete</Button>
                       </Nav>
                     </Navbar.Collapse>
                   </Navbar>

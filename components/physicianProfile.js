@@ -18,9 +18,9 @@ function PhysicianProfile({ physicianObj }) {
 
   return (
     <>
-      <div className="d-flex flex-column flex-grow-1 gap-3 p-4 b-white">
+      <div className="d-flex flex-column flex-grow-1 gap-3 p-4 b-white profile-text">
         <div className="d-flex flex-row flex-grow-1 p-4 gap-5">
-          <Image src={physicianObj.image} alt={physicianObj.displayName} roundedCircle />
+          <Image src={physicianObj.image} alt={physicianObj.displayName} roundedCircle style={{ height: '400px' }} />
           <div className="d-flex flex-column p-4 flex-grow-4">
             <h3>{physicianObj.displayName}{physicianObj.lastName}</h3>
             <h6>{physicianObj.fieldOfStudy}</h6>
@@ -29,6 +29,8 @@ function PhysicianProfile({ physicianObj }) {
               <p>Experience : {physicianObj.experience}</p>
               <p>Languages : {physicianObj.languages}</p>
               <p>Typeof : {physicianObj.typeOf}</p>
+              <Button className="edit-btn" href={`/physicians/edit/${physicianObj.uid}`}><i className="bi bi-pencil-fill" />
+              </Button>
             </div>
           </div>
         </div>

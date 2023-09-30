@@ -73,6 +73,76 @@ function PhysicianForm({ physicianObj }) {
           required
         />
       </FloatingLabel>
+      <FloatingLabel controlId="floatingInput1" label="description" className="mb-3">
+        <Form.Control
+          type="text"
+          placeholder="Describe Yourself"
+          name="description"
+          value={formInput.description}
+          onChange={handleChange}
+          required
+        />
+      </FloatingLabel>
+      <FloatingLabel controlId="floatingInput1" label="fieldofstudy" className="mb-3">
+        <Form.Control
+          type="text"
+          placeholder="Field Of Study "
+          name="fieldOfStudy"
+          value={formInput.fieldOfStudy}
+          onChange={handleChange}
+          required
+        />
+      </FloatingLabel>
+      <FloatingLabel controlId="floatingInput1" label="experience" className="mb-3">
+        <Form.Control
+          type="text"
+          placeholder="Experience "
+          name="experience"
+          value={formInput.experience}
+          onChange={handleChange}
+          required
+        />
+      </FloatingLabel>
+      <FloatingLabel controlId="floatingInput1" label="hospitalName" className="mb-3">
+        <Form.Control
+          type="text"
+          placeholder="Hospital Name "
+          name="hospitalName"
+          value={formInput.hospitalName}
+          onChange={handleChange}
+          required
+        />
+      </FloatingLabel>
+      <FloatingLabel controlId="floatingInput1" label="languages" className="mb-3">
+        <Form.Control
+          type="text"
+          placeholder="Languages "
+          name="languages"
+          value={formInput.languages}
+          onChange={handleChange}
+          required
+        />
+      </FloatingLabel>
+      <FloatingLabel controlId="floatingInput1" label="typeOf" className="mb-3">
+        <Form.Control
+          type="text"
+          placeholder="Type Of "
+          name="typeOf"
+          value={formInput.typeOf}
+          onChange={handleChange}
+          required
+        />
+      </FloatingLabel>
+      <FloatingLabel controlId="floatingInput1" label="email" className="mb-3">
+        <Form.Control
+          type="email"
+          placeholder="Email "
+          name="email"
+          value={formInput.email}
+          onChange={handleChange}
+          required
+        />
+      </FloatingLabel>
       <FloatingLabel controlId="floatingSelect" label="NPI Number">
         <Form.Control
           type="string"

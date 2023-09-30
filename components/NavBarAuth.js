@@ -3,7 +3,7 @@ import React from 'react';
 import Link from 'next/link';
 import SidebarMenu from 'react-bootstrap-sidebar-menu';
 import {
-  Image, Button,
+  Button,
 } from 'react-bootstrap';
 // import SidebarMenu from 'react-bootstrap-sidebar-menu';
 import { signOut } from '../utils/auth';
@@ -21,26 +21,24 @@ export default function NavBarAuth() {
   }
 
   return (
-    <SidebarMenu className="sidebar-menu">
+    <SidebarMenu className="sidebar-menu" style={{ width: '240px', height: '100%' }}>
       <SidebarMenu.Header>
-        <SidebarMenu.Text className="d-flex gap-4">
-          <Image src="/LOGO.png" alt="LOGO" />
+        <SidebarMenu.Text className="d-flex gap-2">
+          <h1 className="app-name"> CRED TRACK </h1>
         </SidebarMenu.Text>
       </SidebarMenu.Header>
       <SidebarMenu.Collapse>
         <SidebarMenu className="me-auto d-flex flex-column flex-grow-1 justify-content-between align-items-center">
-          <div className="d-flex flex-column gap-3">
+          <div className="d-flex flex-column gap-5">
             {
               user.isAdmin ? (
                 <>
                   <div className="d-flex flex-row align-items-center">
-                    <i className="bi bi-clipboard-plus-fill white-icon" />
                     <Link passHref href="/">
                       <SidebarMenu.Nav.Link>Physicians</SidebarMenu.Nav.Link>
                     </Link>
                   </div>
                   <div className="d-flex flex-row align-items-center">
-                    <i className="bi bi-menu-button-wide-fill white-icon" />
                     <Link passHref href="/physician-applications">
                       <SidebarMenu.Nav.Link>Applications</SidebarMenu.Nav.Link>
                     </Link>
