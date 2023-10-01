@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Image } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import { signIn } from '../utils/auth';
 
 function Signin() {
@@ -7,17 +7,25 @@ function Signin() {
     <div
       className="text-center d-flex flex-column justify-content-center align-content-center"
       style={{
-        height: '90vh',
-        padding: '30px',
-        maxWidth: '400px',
-        margin: '0 auto',
+        height: '100%',
+        width: '100%',
+        backgroundImage:
+          'url("https://www.apaana.com/wp-content/uploads/2022/12/Untitled-design-22.jpg")',
+        backgroundRepeat: 'no-repeat',
       }}
     >
-      <Image src="/LOGO.png" alt="LOGO" />
-      <p />
-      <Button type="button" size="lg" className="copy-btn" onClick={signIn}>
-        Sign In
-      </Button>
+      <h5>Welcome to CredTrack</h5>
+      <div>
+        <Button
+          className=""
+          variant="dark"
+          type="button"
+          size="sm"
+          onClick={signIn}
+        >
+          Sign In
+        </Button>
+      </div>
     </div>
   );
 }

@@ -41,7 +41,7 @@ export default function Home() {
     returnHtml = (
       <div className="m-4 d-flex flex-grow-1">
         <div className="d-flex flex-grow-1 flex-wrap">
-          <PhysicianProfile key={physician.physicianId} physicianObj={physician} onUpdate={getSinglePhysician} />
+          <PhysicianProfile key={physician.physicianId} physicianObj={JSON.parse(JSON.stringify(physician))} onUpdate={getSinglePhysician} />
         </div>
       </div>
     );
@@ -49,7 +49,7 @@ export default function Home() {
     returnHtml = (
       <div className="m-4 d-flex flex-grow-1">
         <div className="d-flex flex-grow-1 flex-wrap">
-          <PhysiciansTable physicians={physicians} onDelete={getAllPhysicians} />
+          <PhysiciansTable physicians={physicians} onUpdate={getAllPhysicians} />
         </div>
       </div>
     );

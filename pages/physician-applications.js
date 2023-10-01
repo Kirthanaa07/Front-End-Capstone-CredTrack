@@ -22,9 +22,11 @@ export default function ApplicationSubmitted() {
   let returnHtml;
   if (!load && user.isAdmin) {
     returnHtml = (
-      <div className="m-4 d-flex flex-grow-1">
-        <div className="d-flex flex-grow-1 flex-wrap">
-          <SubmittedApplicationsTable applications={request} onDelete={getAllPhysiciansRequestApplications} />
+      <div className="text-center my-4">
+        <div className="m-4 d-flex flex-grow-1">
+          <div className="d-flex flex-grow-1 flex-wrap">
+            <SubmittedApplicationsTable applications={request} onDelete={getAllPhysiciansRequestApplications} />
+          </div>
         </div>
       </div>
     );
