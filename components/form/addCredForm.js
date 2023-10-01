@@ -21,9 +21,8 @@ function CredentialForm({ credentialObj, handleSubmit }) {
 
   useEffect(() => {
     getAllCredentialTypesDb().then(setCredentialTypes);
-
     if (credentialObj.credentialId) setFormInput(credentialObj);
-  }, [credentialObj, user]);
+  }, [credentialObj]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

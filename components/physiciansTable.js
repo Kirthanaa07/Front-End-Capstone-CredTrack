@@ -1,20 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Button,
-  Card, Image,
+  Card, Image, Modal,
 } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 import { deletePhysicianDb } from '../api/physicianData';
 import { useAuth } from '../utils/context/authContext';
+import PhysicianForm from './form/addPhysicianForm';
 
-function PhysiciansTable({ physicians, onDelete }) {
+function PhysiciansTable({ physicians, onUpdate }) {
   const { user } = useAuth();
   const router = useRouter();
+  const [selectedPhysician, setSelectedPhysician] = useState({});
+
+  const [showPhysicianForm, setShowPhysicianForm] = useState(false);
+
+  const handleClosePhysicianForm = () => setShowPhysicianForm(false);
+  const handleShowPhysicianForm = () => setShowPhysicianForm(true);
+
+  const handleSubmitPhysicianForm = () => {
+    handleClosePhysicianForm();
+    onUpdate();
+  };
 
   const deleteThisPhysician = (physicianId) => {
     if (window.confirm('Are you sure you want to delete this physician?')) {
-      deletePhysicianDb(physicianId).then(() => onDelete());
+      deletePhysicianDb(physicianId).then(() => onUpdate());
     }
   };
 
@@ -29,7 +41,7 @@ function PhysiciansTable({ physicians, onDelete }) {
         <div className="d-flex flex-wrap">
           {
             physicians.map((physician) => (
-              <Card style={{ width: '18rem', margin: '10px' }}>
+              <Card style={{ width: '17rem', margin: '10px' }}>
                 <Image variant="top" src={physician.image} alt={physician.displayName} thumbnail style={{ height: '400px' }} />
                 <Card.Body>
                   <Card.Title>{physician.displayName}</Card.Title>
@@ -40,7 +52,7 @@ function PhysiciansTable({ physicians, onDelete }) {
                     {
                       user.isAdmin ? (
                         <>
-                          <Button className="edit-btn" href={`/physicians/edit/${physician.uid}`}><i className="bi bi-pencil-fill" />
+                          <Button className="edit-btn" onClick={() => { setSelectedPhysician(physician); handleShowPhysicianForm(); }}><i className="bi bi-pencil-fill" />
                           </Button>
                           <Button className="delete-btn" onClick={() => deleteThisPhysician(physician.physicianId)}><i className="bi bi-trash-fill" /></Button>
                         </>
@@ -52,6 +64,22 @@ function PhysiciansTable({ physicians, onDelete }) {
             ))
           }
         </div>
+        <Modal show={showPhysicianForm} onHide={handleClosePhysicianForm} scrollable>
+          <Modal.Header closeButton>
+            <Modal.Title>Edit Physician</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <PhysicianForm handleSubmit={handleSubmitPhysicianForm} physicianObj={selectedPhysician} />
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClosePhysicianForm}>
+              Close
+            </Button>
+            <Button variant="primary" type="submit" form="physician-form">
+              Save
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </div>
     </>
   );
@@ -69,7 +97,7 @@ PhysiciansTable.propTypes = {
     telephoneNumber: PropTypes.string,
     email: PropTypes.string,
   })).isRequired,
-  onDelete: PropTypes.func.isRequired,
+  onUpdate: PropTypes.func.isRequired,
 };
 
 export default PhysiciansTable;

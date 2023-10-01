@@ -19,8 +19,9 @@ html,
 body {
   padding: 0;
   margin: 0;
-  background-color:rgb(45, 103, 161);
+  background-color: rgb(225, 237, 249);
   color: black;
+  box-sizing: border-box;
 }
 
 a {
@@ -97,8 +98,8 @@ a {
 }
 
 .sidebar-menu {
-  color:whitesmoke;
-  background-color:rgb(8, 32, 67);
+  color: whitesmoke;
+  background-color: rgb(35, 44, 58);
 }
 
 .approved {
@@ -136,15 +137,38 @@ a {
   border: white;
 }
 
-.app-name{
-  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+.app-name {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-size: 30px;
 }
 
-.heading{
-display: flex;
-justify-content: center;
+.heading {
+  display: flex;
+  justify-content: center;
 }
 
-.profile-text{
-  color:black;
+.profile-text {
+  color: black;
+}
+
+.sidebar-menu {
+  min-width: 240px;
+  max-width: 240px;
+  height: 100vh;
+  position: fixed;
+}
+
+.component-container {
+  min-height: 100%;
+  max-height: 100%;
+  overflow-y: auto;
+  margin-left: 240px;
+}
+
+.left-nav:hover {
+  opacity: 0.5;
+}
+
+#physician-form {
+  overflow: auto;
 }

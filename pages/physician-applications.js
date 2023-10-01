@@ -23,7 +23,6 @@ export default function ApplicationSubmitted() {
   if (!load && user.isAdmin) {
     returnHtml = (
       <div className="text-center my-4">
-        <h2> Physician Profiles </h2>
         <div className="m-4 d-flex flex-grow-1">
           <div className="d-flex flex-grow-1 flex-wrap">
             <SubmittedApplicationsTable applications={request} onDelete={getAllPhysiciansRequestApplications} />

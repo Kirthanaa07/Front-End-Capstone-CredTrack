@@ -18,7 +18,9 @@ const ViewDirectorBasedOnUserAuthStatus = ({ component: Component, pageProps }) 
       <>
         <div className="d-flex flex-row">
           <NavBarAuth /> {/* NavBar only visible if user is logged in and is in every view */}
-          <Component {...pageProps} />
+          <div className="component-container">
+            <Component {...pageProps} />
+          </div>
         </div>
       </>
     );

@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
-import { Button } from 'react-bootstrap';
+import { Row } from 'react-bootstrap';
 import { useAuth } from '../../utils/context/authContext';
 import { updatePhysicianDb, createPhysicianDb } from '../../api/physicianData';
 
@@ -14,10 +14,11 @@ const initialState = {
   image: '',
 };
 
-function PhysicianForm({ physicianObj }) {
+function PhysicianForm({ physicianObj, handleSubmit }) {
   const [formInput, setFormInput] = useState(initialState);
   const router = useRouter();
   const { user } = useAuth();
+  const states = ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'];
 
   useEffect(() => {
     if (physicianObj.physicianId) setFormInput(physicianObj);
@@ -31,7 +32,7 @@ function PhysicianForm({ physicianObj }) {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const savePhysician = (e) => {
     e.preventDefault();
     if (physicianObj.physicianId) {
       updatePhysicianDb(formInput).then(() => router.push('/'));
@@ -44,23 +45,103 @@ function PhysicianForm({ physicianObj }) {
         });
       });
     }
+    handleSubmit();
   };
 
   return (
 
-    <Form onSubmit={handleSubmit}>
-      <h2 className="text-white mt-5">{physicianObj.physicianId ? 'Update' : 'Create'} Physician</h2>
+    <Form onSubmit={savePhysician} id="physician-form">
       {/* TITLE INPUT  */}
       <FloatingLabel controlId="floatingInput1" label="Physician's Name" className="mb-3">
         <Form.Control
           type="text"
-          placeholder="Enter your first name"
+          placeholder="Display Name"
           name="displayName"
           value={formInput.displayName}
           onChange={handleChange}
           required
         />
       </FloatingLabel>
+
+      <FloatingLabel controlId="floatingInput1" label="Telephone Number" className="mb-3">
+        <Form.Control
+          type="text"
+          placeholder="Telephone Number"
+          name="telephoneNumber"
+          value={formInput.telephoneNumber}
+          onChange={handleChange}
+          required
+        />
+      </FloatingLabel>
+
+      <FloatingLabel controlId="floatingInput1" label="Address 1" className="mb-3">
+        <Form.Control
+          type="text"
+          placeholder="Address 1"
+          name="address1"
+          value={formInput.address1}
+          onChange={handleChange}
+          required
+        />
+      </FloatingLabel>
+
+      <FloatingLabel controlId="floatingInput1" label="Address 2" className="mb-3">
+        <Form.Control
+          type="text"
+          placeholder="Address 2"
+          name="address2"
+          value={formInput.address2}
+          onChange={handleChange}
+          required
+        />
+      </FloatingLabel>
+
+      <Row className="mb-3">
+        <FloatingLabel controlId="floatingInput1" label="City" className="mb-3">
+          <Form.Control
+            type="text"
+            placeholder="City"
+            name="city"
+            value={formInput.city}
+            onChange={handleChange}
+            required
+          />
+        </FloatingLabel>
+
+        <FloatingLabel controlId="floatingInput1" label="State" className="mb-3">
+          <Form.Select
+            type="text"
+            placeholder="State"
+            name="state"
+            value={formInput.state}
+            onChange={handleChange}
+            required
+          >
+            <option value="">Select From Below</option>
+            {
+              states.map((state) => (
+                <option
+                  key={state}
+                  value={state}
+                >
+                  {state}
+                </option>
+              ))
+            }
+          </Form.Select>
+        </FloatingLabel>
+
+        <FloatingLabel controlId="floatingInput1" label="Zip Code" className="mb-3">
+          <Form.Control
+            type="text"
+            placeholder="Zip Code"
+            name="postalCode"
+            value={formInput.postalCode}
+            onChange={handleChange}
+            required
+          />
+        </FloatingLabel>
+      </Row>
 
       {/* IMAGE INPUT  */}
       <FloatingLabel controlId="floatingInput2" label="Image" className="mb-3">
@@ -73,7 +154,7 @@ function PhysicianForm({ physicianObj }) {
           required
         />
       </FloatingLabel>
-      <FloatingLabel controlId="floatingInput1" label="description" className="mb-3">
+      <FloatingLabel controlId="floatingInput1" label="Description" className="mb-3">
         <Form.Control
           type="text"
           placeholder="Describe Yourself"
@@ -83,57 +164,57 @@ function PhysicianForm({ physicianObj }) {
           required
         />
       </FloatingLabel>
-      <FloatingLabel controlId="floatingInput1" label="fieldofstudy" className="mb-3">
+      <FloatingLabel controlId="floatingInput1" label="Field of Study" className="mb-3">
         <Form.Control
           type="text"
-          placeholder="Field Of Study "
+          placeholder="Field Of Study"
           name="fieldOfStudy"
           value={formInput.fieldOfStudy}
           onChange={handleChange}
           required
         />
       </FloatingLabel>
-      <FloatingLabel controlId="floatingInput1" label="experience" className="mb-3">
+      <FloatingLabel controlId="floatingInput1" label="Experience" className="mb-3">
         <Form.Control
           type="text"
-          placeholder="Experience "
+          placeholder="Experience"
           name="experience"
           value={formInput.experience}
           onChange={handleChange}
           required
         />
       </FloatingLabel>
-      <FloatingLabel controlId="floatingInput1" label="hospitalName" className="mb-3">
+      <FloatingLabel controlId="floatingInput1" label="Hospital Name" className="mb-3">
         <Form.Control
           type="text"
-          placeholder="Hospital Name "
+          placeholder="Hospital Name"
           name="hospitalName"
           value={formInput.hospitalName}
           onChange={handleChange}
           required
         />
       </FloatingLabel>
-      <FloatingLabel controlId="floatingInput1" label="languages" className="mb-3">
+      <FloatingLabel controlId="floatingInput1" label="Languages" className="mb-3">
         <Form.Control
           type="text"
-          placeholder="Languages "
+          placeholder="Languages"
           name="languages"
           value={formInput.languages}
           onChange={handleChange}
           required
         />
       </FloatingLabel>
-      <FloatingLabel controlId="floatingInput1" label="typeOf" className="mb-3">
+      <FloatingLabel controlId="floatingInput1" label="Specialty" className="mb-3">
         <Form.Control
           type="text"
-          placeholder="Type Of "
+          placeholder="Specialty"
           name="typeOf"
           value={formInput.typeOf}
           onChange={handleChange}
           required
         />
       </FloatingLabel>
-      <FloatingLabel controlId="floatingInput1" label="email" className="mb-3">
+      <FloatingLabel controlId="floatingInput1" label="Email" className="mb-3">
         <Form.Control
           type="email"
           placeholder="Email "
@@ -153,9 +234,6 @@ function PhysicianForm({ physicianObj }) {
           required
         />
       </FloatingLabel>
-
-      {/* SUBMIT BUTTON  */}
-      <Button type="submit">{physicianObj.physicianId ? 'Update' : 'Create'} Profile</Button>
     </Form>
   );
 }
@@ -171,6 +249,7 @@ PhysicianForm.propTypes = {
     telephoneNumber: PropTypes.string,
     email: PropTypes.string,
   }),
+  handleSubmit: PropTypes.func.isRequired,
 };
 
 PhysicianForm.defaultProps = {
