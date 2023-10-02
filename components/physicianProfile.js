@@ -75,7 +75,7 @@ function PhysicianProfile({ physicianObj, onUpdate }) {
               <Modal.Title>Add Credential</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <CredentialForm handleSubmit={handleSubmitCredForm} />
+              <CredentialForm physicianUid={physicianObj.uid} handleSubmit={handleSubmitCredForm} />
             </Modal.Body>
             <Modal.Footer>
               <Button variant="secondary" onClick={handleCloseCredForm}>

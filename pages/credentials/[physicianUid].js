@@ -7,25 +7,27 @@ import {
 import { deleteCredentialDb, getAllCredentialsForPhysicianDb } from '../../api/credentialData';
 import getAllCredentialTypes from '../../api/credentialTypeData';
 import CredentialForm from '../../components/form/addCredForm';
+import { getSinglePhysicianDb } from '../../api/physicianData';
 
 export default function ViewCredential() {
   const [show, setShow] = useState(false);
+  const [showImg, setShowImg] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const handleCloseImg = () => setShowImg(false);
+  const handleShowImg = () => setShowImg(true);
   const [isLoading, setIsLoading] = useState(true);
   const [credentialDetails, setCredentialDetails] = useState([]);
   const [credImg, setCredentialImg] = useState();
   const [selectedCred, setSelectedCred] = useState({});
+  const [physician, setPhysician] = useState({});
   const router = useRouter();
   const { physicianUid } = router.query;
 
-  const deleteThisCredential = (credentialType) => {
-    const cred = credentialDetails.find((c) => c.credentialType === credentialType.name);
-    if (cred) {
-      if (window.confirm('Are you sure you want to delete this credential?')) {
-        deleteCredentialDb(cred.credentialId).then(() => router.push('/'));
-      }
+  const deleteThisCredential = (credentialDetail) => {
+    if (window.confirm('Are you sure you want to delete this credential?')) {
+      deleteCredentialDb(credentialDetail.physicianCredential.credentialId).then(() => router.push('/'));
     }
   };
 
@@ -44,31 +46,26 @@ export default function ViewCredential() {
       .then(setIsLoading(false));
   };
 
-  const showCredential = (credentialType) => {
-    const cred = credentialDetails.find((c) => c.credentialType === credentialType.name);
-    if (cred) {
-      setCredentialImg(cred.imageUrl);
-    }
-  };
-
   const handleSubmit = () => {
     handleClose();
     getAllPhysicianCredentials(physicianUid);
   };
 
   useEffect(() => {
+    getSinglePhysicianDb(physicianUid).then(setPhysician);
     getAllPhysicianCredentials(physicianUid);
   }, [physicianUid]);
 
   if (!isLoading) {
     return (
-      <div className="d-flex flex-row flex-grow-1 m-4">
-        <div className="d-flex flex-column flex-grow-1 left-panel">
+      <div className="d-flex flex-column flex-grow-1 m-4">
+        <h2> {physician.displayName} </h2>
+        <div className="d-flex flex-column flex-grow-1">
           <ListGroup className="d-flex gap-3">
             {
               credentialDetails.map((credentialDetail) => (
                 <div key={credentialDetail.credentialTypeId} className="d-flex flex-row align-items-center gap-2 justify-content-between">
-                  <ListGroup.Item action onClick={() => showCredential(credentialDetail)}>
+                  <ListGroup.Item className="d-flex flex-row flex-grow-1 justify-content-between list-item">
                     <div>{credentialDetail.name}
                       {credentialDetail.physicianCredential?.approvalStatus === 'Approved' ? (
                         <div className="approve">
@@ -81,21 +78,46 @@ export default function ViewCredential() {
                         </div>
                       ) : <></>}
                     </div>
+                    <div className="d-flex flex-row gap-2">
+                      {credentialDetail.physicianCredential ? (
+                        <>
+                          <Button variant="outline-success" className="view-btn" onClick={() => { setCredentialImg(credentialDetail.physicianCredential.imageUrl); handleShowImg(); }}>
+                            <i className="bi bi-eye-fill" />
+                          </Button>
+                          <Button variant="outline-info" className="edit-btn" onClick={() => { setSelectedCred(credentialDetail); handleShow(); }}>
+                            <i className="bi bi-pencil-fill" />
+                          </Button>
+                          <Button variant="outline-danger" className="delete-btn" onClick={() => deleteThisCredential(credentialDetail)}><i className="bi bi-trash-fill" /></Button>
+                        </>
+                      ) : <>No Credential added</>}
+                    </div>
                   </ListGroup.Item>
-                  <Button variant="outline-info" onClick={() => { setSelectedCred(credentialDetail); handleShow(); }}>
-                    Edit
-                  </Button>
-                  <Button variant="outline-danger" onClick={() => deleteThisCredential(credentialDetail)}>Delete</Button>
+
                 </div>
               ))
             }
           </ListGroup>
+          <Modal show={showImg} onHide={handleCloseImg}>
+            <Modal.Header closeButton>
+              <Modal.Title>Credential</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <div className="d-flex flex-column flex-grow-1">
+                <Image src={credImg} className="cred-image" />
+              </div>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleCloseImg}>
+                Close
+              </Button>
+            </Modal.Footer>
+          </Modal>
           <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
               <Modal.Title>Edit Credential</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <CredentialForm handleSubmit={handleSubmit} credentialObj={selectedCred.physicianCredential} />
+              <CredentialForm physicianUid={physicianUid} handleSubmit={handleSubmit} credentialObj={selectedCred.physicianCredential} />
             </Modal.Body>
             <Modal.Footer>
               <Button variant="secondary" onClick={handleClose}>
@@ -107,9 +129,7 @@ export default function ViewCredential() {
             </Modal.Footer>
           </Modal>
         </div>
-        <div className="d-flex flex-column flex-grow-1 right-panel">
-          <Image src={credImg} className="cred-image" />
-        </div>
+
       </div>
     );
   }

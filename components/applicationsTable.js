@@ -56,7 +56,7 @@ function SubmittedApplicationsTable({ applications, onDelete }) {
         <div className="d-flex flex-wrap">
           {
             applications.map((request) => (
-              <Card style={{ width: '17rem', margin: '10px' }}>
+              <Card key={request.physicianRequestId} className="applicationCard-color" style={{ width: '17rem', margin: '10px' }}>
                 <Card.Body>
                   <Card.Title key={request.physicianRequestId} />
                   <Card.Text className="cell">{request.displayName}</Card.Text>

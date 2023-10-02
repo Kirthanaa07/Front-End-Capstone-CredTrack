@@ -41,20 +41,20 @@ function PhysiciansTable({ physicians, onUpdate }) {
         <div className="d-flex flex-wrap">
           {
             physicians.map((physician) => (
-              <Card style={{ width: '17rem', margin: '10px' }}>
+              <Card key={physician.uid} style={{ width: '17rem', margin: '10px' }}>
                 <Image variant="top" src={physician.image} alt={physician.displayName} thumbnail style={{ height: '400px' }} />
                 <Card.Body>
                   <Card.Title>{physician.displayName}</Card.Title>
                   <Card.Text>{physician.telephoneNumber}</Card.Text>
                   <Card.Text>{physician.npiNumber}</Card.Text>
                   <div className="card-btn">
-                    <Button className="view-btn" onClick={() => viewPhysician(physician.uid)}> <i className="bi bi-eye-fill" /></Button>
+                    <Button variant="outline-success" className="view-btn" onClick={() => viewPhysician(physician.uid)}> <i className="bi bi-eye-fill" /></Button>
                     {
                       user.isAdmin ? (
                         <>
-                          <Button className="edit-btn" onClick={() => { setSelectedPhysician(physician); handleShowPhysicianForm(); }}><i className="bi bi-pencil-fill" />
+                          <Button variant="outline-info" className="edit-btn" onClick={() => { setSelectedPhysician(physician); handleShowPhysicianForm(); }}><i className="bi bi-pencil-fill" />
                           </Button>
-                          <Button className="delete-btn" onClick={() => deleteThisPhysician(physician.physicianId)}><i className="bi bi-trash-fill" /></Button>
+                          <Button variant="outline-danger" className="delete-btn" onClick={() => deleteThisPhysician(physician.physicianId)}><i className="bi bi-trash-fill" /></Button>
                         </>
                       ) : <></>
                     }

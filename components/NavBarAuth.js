@@ -1,15 +1,20 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import SidebarMenu from 'react-bootstrap-sidebar-menu';
 import {
-  Button,
+  Button, Modal,
 } from 'react-bootstrap';
 // import SidebarMenu from 'react-bootstrap-sidebar-menu';
 import { signOut } from '../utils/auth';
 import { useAuth } from '../utils/context/authContext';
+import ApplicationForm from './form/applicationForm';
 
 export default function NavBarAuth() {
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const { user } = useAuth();
   let role;
   if (user.isAdmin) {
@@ -62,9 +67,23 @@ export default function NavBarAuth() {
                   <Link passHref href="/">
                     <SidebarMenu.Nav.Link>Physicians</SidebarMenu.Nav.Link>
                   </Link>
-                  <Link passHref href="/application-form/new">
-                    <SidebarMenu.Nav.Link>Apply For Physician</SidebarMenu.Nav.Link>
-                  </Link>
+                  <SidebarMenu.Text onClick={handleShow} className="left-nav-link">Apply For Physician</SidebarMenu.Text>
+                  <Modal show={show} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                      <Modal.Title>Application</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <ApplicationForm handleSubmit={handleClose} />
+                    </Modal.Body>
+                    <Modal.Footer>
+                      <Button variant="secondary" onClick={handleClose}>
+                        Close
+                      </Button>
+                      <Button variant="primary" type="submit" form="application-form">
+                        Save Changes
+                      </Button>
+                    </Modal.Footer>
+                  </Modal>
                 </>
               ) : <></>
             }
