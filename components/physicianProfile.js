@@ -30,7 +30,7 @@ function PhysicianProfile({ physicianObj, onUpdate }) {
     <>
       <div className="d-flex flex-column flex-grow-1 gap-3 p-4 b-white profile-text">
         <div className="d-flex flex-row flex-grow-1 p-4 gap-5">
-          <Image src={physicianObj.image} alt={physicianObj.displayName} roundedCircle style={{ height: '400px' }} />
+          <Image src={physicianObj.image} alt={physicianObj.displayName} style={{ height: '400px' }} />
           <div className="d-flex flex-column p-4 flex-grow-4">
             <h3>{physicianObj.displayName}</h3>
             <h6>{physicianObj.fieldOfStudy}</h6>

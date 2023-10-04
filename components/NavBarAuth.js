@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import SidebarMenu from 'react-bootstrap-sidebar-menu';
 import {
-  Button, Modal,
+  Button, Image, Modal,
 } from 'react-bootstrap';
 // import SidebarMenu from 'react-bootstrap-sidebar-menu';
 import { signOut } from '../utils/auth';
@@ -31,6 +31,7 @@ export default function NavBarAuth() {
         <SidebarMenu.Text className="d-flex justify-content-center p-3">
           <h1 className="app-name"> CRED TRACK </h1>
         </SidebarMenu.Text>
+        <Image>{user.uid.image}</Image>
       </SidebarMenu.Header>
       <SidebarMenu.Collapse className="d-flex flex-grow-1">
         <SidebarMenu className="d-flex flex-column flex-grow-1 justify-content-between align-items-center">
@@ -80,7 +81,7 @@ export default function NavBarAuth() {
                         Close
                       </Button>
                       <Button variant="primary" type="submit" form="application-form">
-                        Save Changes
+                        Submit
                       </Button>
                     </Modal.Footer>
                   </Modal>

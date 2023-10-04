@@ -66,7 +66,7 @@ export default function ViewCredential() {
               credentialDetails.map((credentialDetail) => (
                 <div key={credentialDetail.credentialTypeId} className="d-flex flex-row align-items-center gap-2 justify-content-between">
                   <ListGroup.Item className="d-flex flex-row flex-grow-1 justify-content-between list-item">
-                    <div>{credentialDetail.name}
+                    <div>{credentialDetail.name} {credentialDetail.expirationDate}
                       {credentialDetail.physicianCredential?.approvalStatus === 'Approved' ? (
                         <div className="approve">
                           <i className="bi bi-check-square approved" />

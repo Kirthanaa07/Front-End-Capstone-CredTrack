@@ -1,7 +1,7 @@
 ## CRED TRACK
 
 ## Overview of the project
-CRED TRACK is a website which allows the Physicians User to add their credentials and make them available for public to view. It also provides create, update, delete credential options. 
+CRED TRACK is a website which allows the Physician User to add their credentials and make them available for public to view. It also provides create, update, delete credential options.One can login as a Public User and request to become a Physician User to the Administrator. Administrator, can approve and import the physician using the external API call.
 
 ## Link/screenshot of data flowchart
 <https://www.figma.com/file/YynUvoBXxmt73birURCXlg/Front-End-Capstone-wireframe?type=design&node-id=0-1&mode=design&t=wKtA3OYKGmymbatE-0>
