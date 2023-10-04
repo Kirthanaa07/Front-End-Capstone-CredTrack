@@ -1,12 +1,12 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
 
-const signIn = () => {
+const signIn = (router) => {
   const provider = new firebase.auth.GoogleAuthProvider();
-  provider.setCustomParameters({
-    prompt: 'select_account',
-  });
-  firebase.auth().signInWithRedirect(provider);
+  firebase.auth().signInWithPopup(provider)
+    .then(() => {
+      router.push('/');
+    });
 };
 
 const signOut = () => {

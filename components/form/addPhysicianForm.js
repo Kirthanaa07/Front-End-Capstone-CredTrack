@@ -57,7 +57,7 @@ function PhysicianForm({ physicianObj, handleSubmit }) {
           type="text"
           placeholder="Display Name"
           name="displayName"
-          value={formInput.displayName}
+          value={formInput.displayName || ''}
           onChange={handleChange}
           required
         />
@@ -68,7 +68,7 @@ function PhysicianForm({ physicianObj, handleSubmit }) {
           type="text"
           placeholder="Telephone Number"
           name="telephoneNumber"
-          value={formInput.telephoneNumber}
+          value={formInput.telephoneNumber || ''}
           onChange={handleChange}
           required
         />
@@ -79,7 +79,7 @@ function PhysicianForm({ physicianObj, handleSubmit }) {
           type="text"
           placeholder="Address 1"
           name="address1"
-          value={formInput.address1}
+          value={formInput.address1 || ''}
           onChange={handleChange}
           required
         />
@@ -90,7 +90,7 @@ function PhysicianForm({ physicianObj, handleSubmit }) {
           type="text"
           placeholder="Address 2"
           name="address2"
-          value={formInput.address2}
+          value={formInput.address2 || ''}
           onChange={handleChange}
           required
         />
@@ -102,7 +102,7 @@ function PhysicianForm({ physicianObj, handleSubmit }) {
             type="text"
             placeholder="City"
             name="city"
-            value={formInput.city}
+            value={formInput.city || ''}
             onChange={handleChange}
             required
           />
@@ -113,7 +113,7 @@ function PhysicianForm({ physicianObj, handleSubmit }) {
             type="text"
             placeholder="State"
             name="state"
-            value={formInput.state}
+            value={formInput.state || ''}
             onChange={handleChange}
             required
           >
@@ -122,7 +122,7 @@ function PhysicianForm({ physicianObj, handleSubmit }) {
               states.map((state) => (
                 <option
                   key={state}
-                  value={state}
+                  value={state || ''}
                 >
                   {state}
                 </option>
@@ -136,7 +136,7 @@ function PhysicianForm({ physicianObj, handleSubmit }) {
             type="text"
             placeholder="Zip Code"
             name="postalCode"
-            value={formInput.postalCode}
+            value={formInput.postalCode || ''}
             onChange={handleChange}
             required
           />
@@ -149,7 +149,7 @@ function PhysicianForm({ physicianObj, handleSubmit }) {
           type="url"
           placeholder="Enter an image url"
           name="image"
-          value={formInput.image}
+          value={formInput.image || ''}
           onChange={handleChange}
           required
         />
@@ -159,7 +159,7 @@ function PhysicianForm({ physicianObj, handleSubmit }) {
           type="text"
           placeholder="Describe Yourself"
           name="description"
-          value={formInput.description}
+          value={formInput.description || ''}
           onChange={handleChange}
           required
         />
@@ -169,7 +169,7 @@ function PhysicianForm({ physicianObj, handleSubmit }) {
           type="text"
           placeholder="Field Of Study"
           name="fieldOfStudy"
-          value={formInput.fieldOfStudy}
+          value={formInput.fieldOfStudy || ''}
           onChange={handleChange}
           required
         />
@@ -179,7 +179,7 @@ function PhysicianForm({ physicianObj, handleSubmit }) {
           type="text"
           placeholder="Experience"
           name="experience"
-          value={formInput.experience}
+          value={formInput.experience || ''}
           onChange={handleChange}
           required
         />
@@ -189,7 +189,7 @@ function PhysicianForm({ physicianObj, handleSubmit }) {
           type="text"
           placeholder="Hospital Name"
           name="hospitalName"
-          value={formInput.hospitalName}
+          value={formInput.hospitalName || ''}
           onChange={handleChange}
           required
         />
@@ -199,7 +199,7 @@ function PhysicianForm({ physicianObj, handleSubmit }) {
           type="text"
           placeholder="Languages"
           name="languages"
-          value={formInput.languages}
+          value={formInput.languages || ''}
           onChange={handleChange}
           required
         />
@@ -209,7 +209,7 @@ function PhysicianForm({ physicianObj, handleSubmit }) {
           type="text"
           placeholder="Specialty"
           name="typeOf"
-          value={formInput.typeOf}
+          value={formInput.typeOf || ''}
           onChange={handleChange}
           required
         />
@@ -219,7 +219,7 @@ function PhysicianForm({ physicianObj, handleSubmit }) {
           type="email"
           placeholder="Email "
           name="email"
-          value={formInput.email}
+          value={formInput.email || ''}
           onChange={handleChange}
           required
         />
@@ -229,7 +229,7 @@ function PhysicianForm({ physicianObj, handleSubmit }) {
           type="string"
           placeholder="Enter NPI number"
           name="npiNumber"
-          value={formInput.npiNumber}
+          value={formInput.npiNumber || ''}
           onChange={handleChange}
           required
         />

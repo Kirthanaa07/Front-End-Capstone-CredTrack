@@ -5,7 +5,7 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import { useAuth } from '../../utils/context/authContext';
 import getAllCredentialTypesDb from '../../api/credentialTypeData';
-import { createCredentialDb, updateCredentialDb } from '../../api/credentialData';
+import { createCredentialDb, getAllCredentialsForPhysicianDb, updateCredentialDb } from '../../api/credentialData';
 
 const initialState = {
   credentialType: '',
@@ -13,14 +13,24 @@ const initialState = {
   expirationDate: '',
 };
 
-function CredentialForm({ credentialObj, handleSubmit }) {
+function CredentialForm({ physicianUid, credentialObj, handleSubmit }) {
   const [formInput, setFormInput] = useState(initialState);
   const [credentialTypes, setCredentialTypes] = useState([]);
   const { user } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    getAllCredentialTypesDb().then(setCredentialTypes);
+    getAllCredentialsForPhysicianDb(physicianUid).then((physCreds) => {
+      getAllCredentialTypesDb().then((types) => {
+        if (credentialObj.credentialId) {
+          setCredentialTypes(types);
+        } else {
+          const physCredTypes = physCreds.map((c) => c.credentialType);
+          const filteredTypes = types.filter((t) => physCredTypes.indexOf(t.name) === -1);
+          setCredentialTypes(filteredTypes);
+        }
+      });
+    });
     if (credentialObj.credentialId) setFormInput(credentialObj);
   }, [credentialObj]);
 
@@ -55,9 +65,10 @@ function CredentialForm({ credentialObj, handleSubmit }) {
         <Form.Select
           aria-label="Credential Type"
           name="credentialType"
+          disabled={credentialObj.credentialId}
           onChange={handleChange}
           className="mb-3"
-          value={formInput.credentialType}
+          value={formInput.credentialType || ''}
           required
         >
           <option value="">Select From Below</option>
@@ -65,7 +76,7 @@ function CredentialForm({ credentialObj, handleSubmit }) {
             credentialTypes.map((credentialType) => (
               <option
                 key={credentialType.credentialTypeId}
-                value={credentialType.name}
+                value={credentialType.name || ''}
               >
                 {credentialType.name}
               </option>
@@ -80,7 +91,7 @@ function CredentialForm({ credentialObj, handleSubmit }) {
           type="url"
           placeholder="Enter an image url"
           name="imageUrl"
-          value={formInput.imageUrl}
+          value={formInput.imageUrl || ''}
           onChange={handleChange}
           required
         />
@@ -92,7 +103,7 @@ function CredentialForm({ credentialObj, handleSubmit }) {
           type="date"
           placeholder="Enter Expiration date"
           name="expirationDate"
-          value={formInput.expirationDate}
+          value={formInput.expirationDate || ''}
           onChange={handleChange}
           required
         />
@@ -102,6 +113,7 @@ function CredentialForm({ credentialObj, handleSubmit }) {
 }
 
 CredentialForm.propTypes = {
+  physicianUid: PropTypes.string,
   credentialObj: PropTypes.shape({
     credentialId: PropTypes.string,
     uid: PropTypes.string,
@@ -113,6 +125,7 @@ CredentialForm.propTypes = {
 };
 
 CredentialForm.defaultProps = {
+  physicianUid: '',
   credentialObj: initialState,
 };
 

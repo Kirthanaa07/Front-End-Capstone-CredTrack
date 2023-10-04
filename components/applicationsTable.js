@@ -56,18 +56,18 @@ function SubmittedApplicationsTable({ applications, onDelete }) {
         <div className="d-flex flex-wrap">
           {
             applications.map((request) => (
-              <Card style={{ width: '17rem', margin: '10px' }}>
+              <Card key={request.physicianRequestId} className="applicationCard-color" style={{ width: '17rem', margin: '10px' }}>
                 <Card.Body>
                   <Card.Title key={request.physicianRequestId} />
-                  <Card.Text className="cell">{request.displayName}</Card.Text>
-                  <Card.Text className="cell">{request.npiNumber}</Card.Text>
-                  <Card.Text className="cell">{request.status}</Card.Text>
+                  <Card.Text className="cell">NAME : {request.displayName}</Card.Text>
+                  <Card.Text className="cell"> NPI NUMBER : {request.npiNumber}</Card.Text>
+                  <Card.Text className="cell"> STATUS : {request.status}</Card.Text>
                   <div>
                     {
                       user.isAdmin && request.status === 'Submitted' ? (
                         <>
-                          <Button onClick={() => getPhysicianByNpiAndImport(request)}><i className="bi bi-check2-circle pe-3" />Approve and Import</Button>
-                          <Button onClick={() => deleteThisPhysicianRequest(request.physicianRequestId)}><i className="bi bi-trash-fill pe-3" />Reject</Button>
+                          <Button variant="outline-success" className="view-btn" onClick={() => getPhysicianByNpiAndImport(request)}><i className="bi bi-check2-circle pe-3" />Approve and Import</Button>
+                          <Button variant="outline-danger" className="delete-btn" onClick={() => deleteThisPhysicianRequest(request.physicianRequestId)}><i className="bi bi-trash-fill pe-3" />Reject</Button>
 
                         </>
                       ) : <></>

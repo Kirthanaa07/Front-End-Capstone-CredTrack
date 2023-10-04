@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
+import router from 'next/router';
 import { signIn } from '../utils/auth';
 
 function Signin() {
@@ -21,7 +22,10 @@ function Signin() {
           variant="dark"
           type="button"
           size="sm"
-          onClick={signIn}
+          onClick={() => {
+            signIn(router);
+          }}
+          style={{ cursor: 'pointer' }}
         >
           Sign In
         </Button>
